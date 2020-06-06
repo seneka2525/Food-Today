@@ -111,7 +111,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     <div class="header__inner header-width">
       <h1 class="header__logo"><a href="index.html">今日、何食べる？</a></h1>
       <ul class="header__list">
-        <li class="header__link"><a href="login.html">ログイン</a></li>
+        <li class="header__link"><a href="">ログイン</a></li>
         <li class="header__link"><a href="signup.html">ユーザー登録</a></li>
       </ul>
     </div>
@@ -120,19 +120,27 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   <!-- ログインフォーム -->
   <div class="site-width">
     <section class="login form-container">
-      <form action="mypage.html" method="post" class="login__form">
+      <form action="" method="post" class="login__form">
         <h2 class="login__title title">ログイン</h2>
         <div class="area-msg">
-          メールアドレスまたはパスワードが違います
+          <?php
+            if(!empty($err_msg['common'])) echo $err_msg['common'];
+          ?>
         </div>
-        <label>
+        <label class="<?php if(!empty($err_msg['email'])) echo 'err'; ?>">
           メールアドレス
-          <input type="text" name="email">
+          <input type="text" name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; ?>">
         </label>
-        <label>
+        <div class="area-msg">
+          <?php
+            if(!empty($err_msg['common'])) echo $err_msg['email'];
+          ?>
+        </div>
+        <label class="<?php if(!empty($err_msg['pass'])) echo 'err'; ?>">
           パスワード
-          <input type="text" name="pass">
+          <input type="text" name="pass" value="<?php if(!empty($_POST['pass'])) echo $_POST['pass']; ?>">
         </label>
+
         <label>
           <input type="checkbox" name="pass_save">次回ログインを省略する
         </label>

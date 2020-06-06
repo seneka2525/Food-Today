@@ -19,7 +19,6 @@ function debug($str){
     error_log('デバッグ：'.$str);
   }
 }
-
 //================================
 // セッション準備・セッション有効期限を延ばす
 //================================
@@ -92,9 +91,9 @@ function validEmailDup($email){
     $sql = 'SELECT count(*) FROM users WHERE email = :email';
     $data = array(':email' => $email);
     // クエリ実行
-    queryPost($dbh,$sql,$data);
+    $stmt = queryPost($dbh,$sql,$data);
     // クエリ結果の値を取得
-    $result = $stmt->fetch(PDO::FETCT_ASSOC);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
     //array_shift関数は配列の先頭を取り出す関数です。クエリ結果は配列形式で入っているので、array_shiftで1つ目だけ取り出して判定します
     if(!empty(array_shift($result))){
       $err_msg['email'] = MSG08;
@@ -143,7 +142,7 @@ function dbConnect(){
   $user = 'root';
   $password = 'root';
   $options = array(
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_SELENT,
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
   );
@@ -158,4 +157,3 @@ function queryPost($dbh, $sql, $data){
   $stmt->execute($data);
   return $stmt;
 }
-?>
