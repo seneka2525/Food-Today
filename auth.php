@@ -19,7 +19,7 @@ if(!empty($_SESSION['login_date'])){
     // 最終ログイン日時を現在日時に更新
     $_SESSION['login_date'] = time();
     debug('マイページへ遷移します。');
-    header("Location:mypage.html"); //マイページへ
+    header("Location:mypage.php"); //マイページへ
   }
 
 }else{

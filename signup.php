@@ -62,7 +62,7 @@ if(!empty($_POST)){
           debug('ユーザーを登録しました。');
 
           // マイページへ遷移
-          header('Location:mypage.html');
+          header('Location:mypage.php');
 
         } catch (Exception $e){
           error_log('エラー発生：' . $e->getMessage);
@@ -90,10 +90,10 @@ if(!empty($_POST)){
   <!-- ヘッダー -->
   <header class="header">
     <div class="header__inner header-width">
-      <h1 class="header__logo"><a href="index.html">今日、何食べる？</a></h1>
+      <h1 class="header__logo"><a href="index.php">今日、何食べる？</a></h1>
       <ul class="header__list">
-        <li class="header__link"><a href="login.html">ログイン</a></li>
-        <li class="header__link"><a href="signup.html">ユーザー登録</a></li>
+        <li class="header__link"><a href="login.php">ログイン</a></li>
+        <li class="header__link"><a href="signup.php">ユーザー登録</a></li>
       </ul>
     </div>
   </header>
@@ -137,7 +137,7 @@ if(!empty($_POST)){
   <!-- フッター -->
   <footer class="footer">
     <div class="footer__inner">
-      <p class="footer__text">Copyright <a href="index.html">WEBサービスOP</a>. All Rights Reserved.</p>
+      <p class="footer__text">Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.</p>
     </div>
   </footer>
 </body>

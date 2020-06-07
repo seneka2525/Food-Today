@@ -79,7 +79,7 @@ if(!empty($_POST)){
 
         debug('セッション変数の中身：'.print_r($_SESSION,true));
         debug('マイページへ遷移します。');
-        header("Location:mypage.html"); //マイページへ
+        header("Location:mypage.php"); //マイページへ
       }else{
         debug('パスワードがアンマッチです。');
         $err_msg['common'] = MSG09;
@@ -109,10 +109,10 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   <!-- ヘッダー -->
   <header class="header">
     <div class="header__inner header-width">
-      <h1 class="header__logo"><a href="index.html">今日、何食べる？</a></h1>
+      <h1 class="header__logo"><a href="index.php">今日、何食べる？</a></h1>
       <ul class="header__list">
         <li class="header__link"><a href="">ログイン</a></li>
-        <li class="header__link"><a href="signup.html">ユーザー登録</a></li>
+        <li class="header__link"><a href="signup.php">ユーザー登録</a></li>
       </ul>
     </div>
   </header>
@@ -147,7 +147,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
           <div class="login__btn-wrap btn-container">
             <input type="submit" class="login__btn btn" value="ログイン">
           </div>
-          パスワードを忘れた方は<a href="passRemendSend.html">こちら</a>
+          パスワードを忘れた方は<a href="passRemendSend.php">こちら</a>
       </form>
     </section>
   </div>
@@ -155,7 +155,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   <!-- フッター -->
   <footer class="footer">
     <div class="footer__inner">
-      <p class="footer__text">Copyright <a href="index.html">WEBサービスOP</a>. All Rights Reserved.</p>
+      <p class="footer__text">Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.</p>
     </div>
   </footer>
 </body>
