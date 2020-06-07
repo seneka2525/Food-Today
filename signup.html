@@ -1,3 +1,79 @@
+<?php
+
+// 共通変数・関数ファイル読み込み
+require('function.php');
+
+// post送信されている場合
+if(!empty($_POST)){
+
+  // 変数にユーザー情報を代入
+  $email = $_POST['email'];
+  $pass = $_POST['pass'];
+  $pass_re = $_POST['pass_re'];
+
+  // 未入力チェック
+  validrequired($email,'email');
+  validrequired($pass,'pass');
+  validrequired($pass_re,'pass_re');
+
+  // エラーメッセージがない場合
+  if(empty($err_msg)){
+
+    // emailの形式チェック
+    validEmail($email,'email');
+    // emailの最大文字数チェック
+    validMaxLen($email,'email');
+    // email重複チェック
+    validEmailDup($email);
+
+    // パスワードの半角英数字チェック
+    validHalf($pass,'pass');
+    // パスワードの最大文字数チェック
+    validMaxLen($pass,'pass');
+    // パスワードの最小文字数チェック
+    validMinLen($pass,'pass');
+
+    // パスワード（再入力）の最大文字数チェック
+    validMaxLen($pass_re,'pass_re');
+    // パスワード（再入力）の最小文字数チェック
+    validMinLen($pass_re,'pass_re');
+
+    // エラーメッセージがない場合
+    if(empty($err_msg)){
+
+      // パスワードとパスワード再入力が合っているかチェック
+      validMatch($pass,$pass_re,'pass_re');
+
+      // エラーメッセージがない場合
+      if(empty($err_msg)){
+        debug('バリデーションOKです!!');
+
+        // ユーザーを登録するため、データベースへ接続する
+        // 例外処理
+        try {
+          $dbh = dbConnect();
+          // SQL文作成
+          $sql = 'INSERT INTO users (email,password,login_time,create_date) VALUES(:email,:pass,:login_time,:create_date)';
+          $data = array(':email' => $email, ':pass' => password_hash($pass, PASSWORD_DEFAULT),
+                        ':login_time' => date('Y-m-d H:i:s'),
+                        ':create_date' => date('Y-m-d H:i:s'));
+          // クエリ実行
+          queryPost($dbh, $sql, $data);
+          debug('ユーザーを登録しました。');
+
+          // マイページへ遷移
+          header('Location:mypage.html');
+
+        } catch (Exception $e){
+          error_log('エラー発生：' . $e->getMessage);
+          $err_msg['common'] = MSG07;
+        }
+
+      }
+    }
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
