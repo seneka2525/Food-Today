@@ -46,10 +46,10 @@ if(!empty($_POST)){
     try {
       $dbh = dbconnect();
       // SQL文作成
-      $sql = 'SELECT password,id FROM rsers WHERE email = :email';
+      $sql = 'SELECT password,id FROM users WHERE email = :email';
       $data = array(':email' => $email);
       // クエリ実行
-      queryPost($dbh, $sql, $data);
+      $stmt = queryPost($dbh, $sql, $data);
       // クエリ結果の値を取得
       $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
