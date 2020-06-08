@@ -17,7 +17,7 @@
       <h1 class="header__logo"><a href="index.php">今日、何食べる？</a></h1>
       <ul class="header__list">
         <li class="header__link"><a href="mypage.php">マイページ</a></li>
-        <li class="header__link"><a href="">ログアウト</a></li>
+        <li class="header__link"><a href="logout.php">ログアウト</a></li>
       </ul>
     </div>
   </header>

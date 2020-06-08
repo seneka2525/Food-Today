@@ -111,7 +111,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     <div class="header__inner header-width">
       <h1 class="header__logo"><a href="index.php">今日、何食べる？</a></h1>
       <ul class="header__list">
-        <li class="header__link"><a href="">ログイン</a></li>
+        <li class="header__link"><a href="login.php">ログイン</a></li>
         <li class="header__link"><a href="signup.php">ユーザー登録</a></li>
       </ul>
     </div>
