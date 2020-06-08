@@ -1,3 +1,16 @@
+<?php
+// 共通変数・関数ファイル読み込み
+require('function.php');
+
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「マイページ」');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
+
+// ログイン認証
+require('auth.php');
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
