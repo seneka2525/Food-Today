@@ -61,9 +61,25 @@ if(!empty($_POST)){
           queryPost($dbh, $sql, $data);
           debug('ユーザーを登録しました。');
 
+          // クエリ成功の場合
+          if($stmt){
+            // ログイン有効期限（デフォルトを１時間とする）
+            $sesLimit = 60*60;
+            // 最終ログイン日時を現在日時に
+            $_SESSION['login_date'] = time();
+            $_SESSION['login_limit'] = $sesLimit;
+            // ユーザーIDを格納
+            $_SESSION['user_id'] = $dbh->lastInsertId();
+
+            debug('セッション変数の中身：'.print_r($_SESSION,true));
+          
           // マイページへ遷移
           header('Location:mypage.php');
-
+          }else{
+            debug('クエリに失敗しました。');
+            $err_msg['common'] = MSG07;
+          }
+          
         } catch (Exception $e){
           error_log('エラー発生：' . $e->getMessage);
           $err_msg['common'] = MSG07;
