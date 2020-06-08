@@ -133,7 +133,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         </label>
         <div class="area-msg">
           <?php
-            if(!empty($err_msg['common'])) echo $err_msg['email'];
+            if(!empty($err_msg['common'])) echo $err_msg['common'];
           ?>
         </div>
         <label class="<?php if(!empty($err_msg['pass'])) echo 'err'; ?>">

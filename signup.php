@@ -3,7 +3,12 @@
 // 共通変数・関数ファイル読み込み
 require('function.php');
 
-// post送信されている場合
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「ユーザー登録ページ」');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
+
+// post送信されていた場合
 if(!empty($_POST)){
 
   // 変数にユーザー情報を代入
@@ -58,8 +63,8 @@ if(!empty($_POST)){
                         ':login_time' => date('Y-m-d H:i:s'),
                         ':create_date' => date('Y-m-d H:i:s'));
           // クエリ実行
-          queryPost($dbh, $sql, $data);
-          debug('ユーザーを登録しました。');
+          $stmt = queryPost($dbh, $sql, $data);
+          debug(print_r($stmt,true));
 
           // クエリ成功の場合
           if($stmt){
@@ -70,6 +75,7 @@ if(!empty($_POST)){
             $_SESSION['login_limit'] = $sesLimit;
             // ユーザーIDを格納
             $_SESSION['user_id'] = $dbh->lastInsertId();
+            debug('ユーザーを登録しました。');
 
             debug('セッション変数の中身：'.print_r($_SESSION,true));
           
@@ -79,7 +85,7 @@ if(!empty($_POST)){
             debug('クエリに失敗しました。');
             $err_msg['common'] = MSG07;
           }
-          
+
         } catch (Exception $e){
           error_log('エラー発生：' . $e->getMessage);
           $err_msg['common'] = MSG07;

@@ -30,9 +30,9 @@ if(!empty($_POST)){
     // データ流し込み
     $data = array(':u_id' => $_SESSION['user_id']);
     // クエリ実行
-    $stmt1 = queryPost($dbh, $sql, $data);
-    $stmt2 = queryPost($dbh, $sql, $data);
-    $stmt3 = queryPost($dbh, $sql, $data);
+    $stmt1 = queryPost($dbh, $sql1, $data);
+    $stmt2 = queryPost($dbh, $sql2, $data);
+    $stmt3 = queryPost($dbh, $sql3, $data);
 
     // クエリ実行成功の場合（最悪userテーブルのみ削除成功していれば良しとする）
     if($stmt1){
@@ -80,7 +80,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   <!-- 退会フォーム -->
   <div class="site-width">
     <section class="withdraw form-container">
-      <form action="" class="withdraw__form">
+      <form action="" method="post" class="withdraw__form">
         <h2 class="withdraw__title title">退会</h2>
         <div class="withdraw__btn-wrap btn-container">
           <input type="submit" class="withdraw__btn btn" value="退会する" name="submit">
