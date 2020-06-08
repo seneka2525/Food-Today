@@ -46,7 +46,7 @@ if(!empty($_POST)){
     try {
       $dbh = dbconnect();
       // SQL文作成
-      $sql = 'SELECT password,id FROM users WHERE email = :email';
+      $sql = 'SELECT password,id FROM users WHERE email = :email AND delete_flg = 0';
       $data = array(':email' => $email);
       // クエリ実行
       $stmt = queryPost($dbh, $sql, $data);
