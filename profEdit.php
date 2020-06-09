@@ -70,12 +70,12 @@ if(!empty($_POST)){
         header('Location:mypage.php');
       }else{
         debug('クエリの失敗しました。');
-        $err_msg['common'] = MSG08;
+        $err_msg['common'] = MSG08; // そのEmailは既に登録されています
       }
 
     }catch (Exception $e){
       error_log('エラー発生：' . $e->getMessage());
-      $err_msg['common'] = MSG07;
+      $err_msg['common'] = MSG07; // エラーが発生しました。しばらく経ってからやり直してください。
     }
   }
 }

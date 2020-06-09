@@ -82,12 +82,12 @@ if(!empty($_POST)){
         header("Location:mypage.php"); //マイページへ
       }else{
         debug('パスワードがアンマッチです。');
-        $err_msg['common'] = MSG09;
+        $err_msg['common'] = MSG09; // メールアドレスまたはパスワードが違います
       }
 
     } catch (Exception $e) {
       error_log('エラー発生：' . $e->getMessage());
-      $err_msg['common'] = MSG07;
+      $err_msg['common'] = MSG07; // エラーが発生しました。しばらく経ってからやり直してください。
     }
   }
 }

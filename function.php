@@ -59,6 +59,10 @@ define('MSG06','255文字以内で入力してください');
 define('MSG07','エラーが発生しました。しばらく経ってからやり直してください。');
 define('MSG08','そのEmailは既に登録されています');
 define('MSG09','メールアドレスまたはパスワードが違います');
+define('MSG10','古いパスワードが違います');
+define('MSG11','古いパスワードと同じです');
+define('SUC01','パスワードを変更しました');
+define('SUC02','プロフィールを変更しました');
 
 //================================
 // バリデーション関数
@@ -70,14 +74,14 @@ $err_msg = array();
 function validRequired($str,$key){
   if(empty($str)){
     global $err_msg;
-    $err_msg[$key] = MSG01;
+    $err_msg[$key] = MSG01; // 入力必須です
   }
 }
 // バリデーション関数（Email形式チェック）
 function validEmail($str,$key){
   if(!preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $str)){
     global $err_msg;
-    $err_msg[$key] = MSG02;
+    $err_msg[$key] = MSG02; // Emailの形式で入力してください
   }
 }
 // バリデーション関数（Email重複チェック）
@@ -96,39 +100,55 @@ function validEmailDup($email){
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     //array_shift関数は配列の先頭を取り出す関数です。クエリ結果は配列形式で入っているので、array_shiftで1つ目だけ取り出して判定します
     if(!empty(array_shift($result))){
-      $err_msg['email'] = MSG08;
+      $err_msg['email'] = MSG08; // そのEmailは既に登録されています
     }
   } catch (Exception $e){
     error_log('エラー発生：' . $e->getMessage());
-    $err_msg['common'] = 'MSG07';
+    $err_msg['common'] = MSG07; // エラーが発生しました。しばらく経ってからやり直してください。
   }
 }
 // バリデーション関数（同値チェック）
 function validMatch($str1, $str2, $key){
   if($str1 !== $str2){
     global $err_msg;
-    $err_msg[$key] = MSG03;
+    $err_msg[$key] = MSG03; // パスワード（再入力が合っていません）
   }
 }
 // バリデーション関数（最小チェック）
 function validMinLen($str, $key, $min = 6){
   if(mb_strlen($str) < $min){
     global $err_msg;
-    $err_msg[$key] = MSG05;
+    $err_msg[$key] = MSG05; // ６文字以上で入力してください
   }
 }
 // バリデーション関数（最大チェック）
 function validMaxLen($str, $key, $max = 255){
   if(mb_strlen($str > $max)){
     global $err_msg;
-    $err_msg[$key] = MSG06;
+    $err_msg[$key] = MSG06; // 256文字以上で入力してください
   }
 }
 // バリデーション関数（半角チェック）
 function validHalf($str, $key){
   if(!preg_match("/^[a-zA-Z0-9]+$/", $str)){
     global $err_msg;
-    $err_msg[$key] = MSG04;
+    $err_msg[$key] = MSG04; // 半角英数字のみご利用いただけます
+  }
+}
+// パスワードチェック
+function validPass($str, $key){
+  // 半角英数字チェック
+  validHalf($str, $key);
+  // 最大文字数チェック
+  validMaxLen($str, $key);
+  // 最小文字数チェック
+  validMinLen($str, $key);
+}
+// エラーメッセージを表示
+function getErrMsg($key){
+  global $err_msg;
+  if(!empty($err_msg[$key])){
+    return $err_msg[$key];
   }
 }
 
@@ -183,7 +203,29 @@ function getUser($u_id){
   // クエリ結果の値を取得
   return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+//================================
+// メール送信
+//================================
+function sendMail($from, $to, $subject, $comment){
+  if(!empty($to) && !empty($subject) && !empty($comment)){
+    // 文字化けしないように設定（お決まりパターン）
+    mb_language("Japanese"); // 現在使っている言語を設定する
+    mb_internal_encoding("UTF-8"); // 内部の日本語をどうエンコーディング（機械が分かる言葉へ変換）するかを設定
 
+    // メール送信（送信結果はtrueかfalseで返ってくる）
+    $result = mb_send_mail($to, $subject, $comment, "From: ".$from);
+    // 送信結果を判定
+    if($result) {
+      debug('メールを送信しました。');
+    } else {
+      debug('【エラー発生】メールの送信に失敗しました。');
+    }
+  }
+}
+
+//================================
+// その他
+//================================
 // フォーム入力保持
 function getFormData($str){
   global $dbFormData;
@@ -211,5 +253,13 @@ function getFormData($str){
     if(isset($_POST[$str])){
       return $_POST[$str];
     }
+  }
+}
+// sessionを１回だけ取得できる（変数dataに内容を入れてSESSIONの内容を削除する）
+function getSessionFlash($key){
+  if(!empty($_SESSION[$key])){
+    $data = $_SESSION[$key];
+    $_SESSION[$key] = '';
+    return $data;
   }
 }
