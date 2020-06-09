@@ -157,3 +157,59 @@ function queryPost($dbh, $sql, $data){
   $stmt->execute($data);
   return $stmt;
 }
+// ユーザー情報取得
+function getUser($u_id){
+  debug('ユーザー情報を取得します。');
+  // 例外処理
+  try {
+    // DBへ接続
+    $dbh = dbConnect();
+    // SQL文作成
+    $sql = 'SELECT * FROM users WHERE id = :u_id';
+    $data = array(':u_id' => $u_id);
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+
+    // クエリ成功の場合
+    if($stmt){
+      debug('クエリ成功。');
+    }else{
+      debug('クエリに失敗しました。');
+    }
+
+  }catch (Exception $e) {
+    error_log('エラー発生：' . $e->getMessage());
+  }
+  // クエリ結果の値を取得
+  return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// フォーム入力保持
+function getFormData($str){
+  global $dbFormData;
+  // ユーザーデータがある場合
+  if(!empty($dbFormData)){
+    // フォームのエラーがある場合
+    if(!empty($err_msg[$str])){
+      // POSTにデータがある場合
+      if(isset($_POST[$str])){//金額や郵便番号などのフォームで数字や数値の0が入っている場合もあるので、issetを使うこと
+        return $dbFormData[$str];
+      }else{
+        // ない場合（フォームにエラーがある＝POSTされているハズなので、まずありえないが）はDBの情報を表示
+        return $dbFormData[$str];
+      }
+    }else{
+      // POSTにデータがあり、DBの情報と違う場合（このフォームも変更していてエラーはないが、他のフォームでひっかかっている状態）
+      if(isset($_POST[$str]) && $_POST[$str] !== $dbFormData[$str]){
+        return $_POST[$str];
+      }else{ // そもそも変更していない
+        return $dbFormData[$str];
+      }
+    }
+  }else{
+    // データベースに情報がない場合、フォームに入力された値を表示する
+    if(isset($_POST[$str])){
+      return $_POST[$str];
+    }
+  }
+}
