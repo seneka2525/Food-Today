@@ -149,7 +149,8 @@ if (!empty($_POST)) {
 debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>
 <?php
-(!$edit_flg) ? '食べ物登録' : '食べ物編集';
+$siteTitle = (!$edit_flg) ? '食べ物登録' : '食べ物編集';
+require('head.php');
 ?>
 <!DOCTYPE html>
 <html lang="ja">
