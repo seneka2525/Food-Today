@@ -61,8 +61,12 @@ define('MSG08','そのEmailは既に登録されています');
 define('MSG09','メールアドレスまたはパスワードが違います');
 define('MSG10','古いパスワードが違います');
 define('MSG11','古いパスワードと同じです');
+define('MSG12','文字で入力してください');
+define('MSG13','正しくありません');
+define('MSG14','有効期限がきれています');
 define('SUC01','パスワードを変更しました');
 define('SUC02','プロフィールを変更しました');
+define('SUC03','メールを送信しました');
 
 //================================
 // バリデーション関数
@@ -114,14 +118,14 @@ function validMatch($str1, $str2, $key){
     $err_msg[$key] = MSG03; // パスワード（再入力が合っていません）
   }
 }
-// バリデーション関数（最小チェック）
+// バリデーション関数（最小文字数チェック）
 function validMinLen($str, $key, $min = 6){
   if(mb_strlen($str) < $min){
     global $err_msg;
     $err_msg[$key] = MSG05; // ６文字以上で入力してください
   }
 }
-// バリデーション関数（最大チェック）
+// バリデーション関数（最大文字数チェック）
 function validMaxLen($str, $key, $max = 255){
   if(mb_strlen($str > $max)){
     global $err_msg;
@@ -133,6 +137,13 @@ function validHalf($str, $key){
   if(!preg_match("/^[a-zA-Z0-9]+$/", $str)){
     global $err_msg;
     $err_msg[$key] = MSG04; // 半角英数字のみご利用いただけます
+  }
+}
+// 固定長チェック
+function validLength($str, $key, $len = 8){
+  if(mb_strlen($str) !== $len){
+    global $err_msg;
+    $err_msg[$key] = $len . MSG12;
   }
 }
 // パスワードチェック
@@ -185,7 +196,7 @@ function getUser($u_id){
     // DBへ接続
     $dbh = dbConnect();
     // SQL文作成
-    $sql = 'SELECT * FROM users WHERE id = :u_id';
+    $sql = 'SELECT * FROM users WHERE id = :u_id AND delete_flg = 0';
     $data = array(':u_id' => $u_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
@@ -262,4 +273,13 @@ function getSessionFlash($key){
     $_SESSION[$key] = '';
     return $data;
   }
+}
+// 認証キー生成
+function makeRandkey($length = 8) {
+  $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJLKMNOPQRSTUVWXYZ0123456789';
+  $str = '';
+  for($i = 0; $i < $length; ++$i) {
+    $str .= $chars[mt_rand(0,62)];
+  }
+  return $str;
 }

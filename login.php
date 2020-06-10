@@ -116,6 +116,10 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
       </ul>
     </div>
   </header>
+  <!-- jsでログインのメッセージを出す -->
+  <p id="js-show-msg" style="display: none" class="msg-slide">
+    <?php echo getSessionFlash('msg_success'); ?>
+  </p>
 
   <!-- ログインフォーム -->
   <div class="site-width">
@@ -133,13 +137,18 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         </label>
         <div class="area-msg">
           <?php
-            if(!empty($err_msg['common'])) echo $err_msg['common'];
+            if(!empty($err_msg['email'])) echo $err_msg['email'];
           ?>
         </div>
         <label class="<?php if(!empty($err_msg['pass'])) echo 'err'; ?>">
           パスワード
-          <input type="text" name="pass" value="<?php if(!empty($_POST['pass'])) echo $_POST['pass']; ?>">
+          <input type="password" name="pass" value="<?php if(!empty($_POST['pass'])) echo $_POST['pass']; ?>">
         </label>
+        <div class="area-msg">
+          <?php
+          if(!empty($err_msg['pass'])) echo $err_msg['pass'];
+          ?>
+        </div>
 
         <label>
           <input type="checkbox" name="pass_save">次回ログインを省略する
@@ -147,7 +156,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
           <div class="login__btn-wrap btn-container">
             <input type="submit" class="login__btn btn" value="ログイン">
           </div>
-          パスワードを忘れた方は<a href="passRemendSend.php">こちら</a>
+          パスワードを忘れた方は<a href="passRemindSend.php">こちら</a>
       </form>
     </section>
   </div>
