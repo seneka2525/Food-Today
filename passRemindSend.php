@@ -111,7 +111,7 @@ EOT;
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" type="text/css" href="dest/bundle.css">
-  <link rel="stylesheet" href="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
   <title>パスワード再発行 | 今日、何食べる？</title>
 </head>
 
@@ -160,4 +160,19 @@ EOT;
       <p class="footer__text">Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.</p>
     </div>
   </footer>
+  <script src="js/vendor/jquery-2.2.2.min.js"></script>
+    <!-- メッセージを表示 -->
+    <script>
+    $(function() {
+      var $jsShowMsg = $('#js-show-msg');
+      var msg = $jsShowMsg.text();
+      if (msg.replace(/^[\s　]+|[\s　]+$/g, "").length) {
+        $jsShowMsg.slideToggle('show');
+        setTimeout(function() {
+          $jsShowMsg.slideToggle('show');
+        }, 5000);
+      }
+
+    });
+  </script>
 </body>

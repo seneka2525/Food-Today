@@ -12,7 +12,7 @@ debugLogStart();
 require('auth.php');
 
 //================================
-// 画面処理
+// ログイン画面処理
 //================================
 // DBからユーザー情報を取得
 $dbFormData = getUser($_SESSION['user_id']);
