@@ -1,3 +1,156 @@
+<?php
+// 共通変数・関数ファイル読み込み
+require('function.php');
+
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「食べ物登録ページ」');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
+
+// ログイン認証
+require('auth.php');
+
+//================================
+// 画面処理
+//================================
+
+// 画面表示用データ取得
+//================================
+// GETデータを格納
+$p_id = (!empty($_GET['p_id'])) ? $_GET['p_id'] : '';
+// DBから商品データを取得
+$dbformData = (!empty($p_id)) ? getProduct($_SESSION['user_id'], $p_id) : '';
+// 新規登録画面か編集画面か判定用フラグ
+$edit_flg = (empty($dbFormdata)) ? false : true;
+// DBからカテゴリデータを取得
+$dbCategoryData = getCategory();
+debug('商品ID：' . $p_id);
+debug('フォーム用DBデータ：' . print_r($dbformData, true));
+debug('カテゴリデータ：' . print_r($dbCategoryData, true));
+
+// パラメータ改ざんチェック
+//================================
+// GETパラメータはあるが、改ざんされている（URLをいじった）
+// 場合、正しい食べ物データが取れないのでマイページへ遷移させる
+if (!empty($p_id) && empty($dbFormData)) {
+  debug('GETパラメータの商品IDが違います。マイページへ遷移します。');
+  header("Location:mypage.php"); // マイページへ
+}
+
+// POST送信時処理
+//================================
+if (!empty($_POST)) {
+  debug('POST送信があります。');
+  debug('POST情報：' . print_r($_POST, true));
+  debug('FILE情報：' . print_r($_FILES, true));
+
+  // 変数にユーザー情報を代入
+  $name = $_POST['name'];
+  $category = $_POST['category_id'];
+  $recipe = $_POST['recipe'];
+  // ０や空文字の場合は０を入れる。デフォルトのフォームには０が入っている
+  $price = (!empty($_POST['price'])) ? $_POST['price'] : 0;
+  $comment = $_POST['comment'];
+  // 画像をアップロードし、パスを格納
+  $pic1 = (!empty($_FILES['pic1']['name'])) ? uploadImg($_FILES['pic1'], 'pic1') : ''; // 新規登録用
+  // 画像をPOSTしていない（登録していない）が既にDBに登録されている場合、DBのパスを入れる（POSTには反映されないので）
+  $pic1 = (empty($pic1) && !empty($dbFormData['pic1'])) ? $dbFormData['pic1'] : $pic1; // 編集画面用
+  $pic2 = (!empty($_FILES['pic2']['name'])) ? uploadImg($_FILES['pic2'], 'pic2') : ''; // 新規登録用
+  $pic2 = (empty($pic2) && !empty($dbFormData['pic2'])) ? $dbFormData['pic2'] : $pic2; // 編集画面用
+  $pic3 = (!empty($_FILES['pic3']['name'])) ? uploadImg($_FILES['pic3'], 'pic3') : ''; // 新規登録用
+  $pic3 = (empty($pic3) && !empty($dbFormData['pic3'])) ? $dbFormData['pic3'] : $pic3; // 編集画面用
+
+  // 更新の場合はDBの情報と入力情報が異なる場合にバリデーションを行う
+  if (empty($dbFormData)) {
+    // 未入力チェック
+    validRequired($name, 'name');
+    // 最大文字数チェック
+    validMaxLen($name, 'name');
+    // セレクトボックスチェック
+    validSelect($category, 'category_id');
+    // 最大文字数チェック
+    validMaxLen($recipe, 'recipe', 500);
+    // 最大文字数チェック
+    validMaxLen($comment, 'comment', 500);
+    // 未入力チェック
+    validRequired($price, 'price');
+    // 半角数字チェック
+    validNumber($price, 'price');
+  } else {
+    if ($dbFormData['name'] !== $name) {
+      // 未入力チェック
+      validRequired($name, 'name');
+      // 最大文字数チェック
+      validMaxLen($name, 'name');
+    }
+    if ($dbFormData['recipe'] !== $recipe) {
+      // 最大文字数チェック
+      validMaxLen($recipe, 'recipe');
+    }
+    if ($dbFormData['category_id'] !== $category) {
+      // セレクトボックスチェック
+      validSelect($category, 'category_id');
+    }
+    if ($dbFormData['comment'] !== $comment) {
+      // 最大文字数チェック
+      validMaxLen($comment, 'comment', 500);
+    }
+    if ($dbFormData['price'] != $price) { // 前回ではキャストしていたが、ゆるい判定でもいい
+      // 未入力チェック
+      validRequired($price, 'price');
+      // 半角数字チェック
+      validNumber($price, 'price');
+    }
+  }
+
+  if (empty($err_msg)) {
+    debug('バリデーションOKです！！');
+
+    // 例外処理
+    try {
+      // DBへ接続
+      $dbh = dbConnect();
+      // SQL文作成
+      // 編集画面の場合はUPDATE文、新規登録画面の場合はINSERT文を生成
+      if ($edit_flg) {
+        debug('DB更新です。');
+        $sql = 'UPDATE product SET name = :name, category_id = :category, recipe = :recipe, price = :price,
+        comment = :comment, pic1 = :pic1, pic2 = :pic2, pic3 = :pic3 WHERE user_id = :u_id AND id = :p_id';
+        $data = array(
+          ':name' => $name, ':category' => $category, ':recipe' => $recipe, ':price' => $price, ':comment' => $comment,
+          ':pic1' => $pic1, ':pic2' => $pic2, ':pic3' => $pic3, ':u_id' => $_SESSION['user_id'], ':p_id' => $p_id
+        );
+      } else {
+        debug('DB新規登録です。');
+        $sql = 'INSERT INTO product (name, category_id, recipe, price, comment, pic1, pic2, pic3, user_id, create_date )
+                values (:name, :category, :recipe, :price, :comment, :pic1, :pic2, :pic3, :u_id, :date)';
+        $data = array(
+          ':name' => $name, ':category' => $category, ':recipe' => $recipe, ':price' => $price, ':comment' => $comment,
+          ':pic1' => $pic1, ':pic2' => $pic2, ':pic3' => $pic3, ':u_id' => $_SESSION['user_id'], ':date' => date('Y-m-d H:i:s')
+        );
+      }
+      debug('SQL：' . $sql);
+      debug('流し込みデータ：' . print_r($data, true));
+      // クエリ実行
+      $stmt = queryPost($dbh, $sql, $data);
+
+      // クエリ成功の場合
+      if ($stmt) {
+        $_SESSION['msg_success'] = SUC04;
+        debug('マイページへ遷移します。');
+        header("Location:mypage.php");
+      }
+    } catch (Exception $e) {
+      error_log('エラー発生：' . $e->getMessage());
+      $err_msg['common'] = MSG07;
+    }
+  }
+}
+debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+?>
+<?php
+(!$edit_flg) ? '食べ物登録' : '食べ物編集';
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -22,66 +175,129 @@
     </div>
   </header>
 
-  <!-- パスワード変更フォーム -->
+  <!-- 食べ物登録・編集フォーム -->
   <div class="site-width">
     <div class="page-title-wrap">
-      <h1 class="page-title title">料理を登録する</h1>
+      <h1 class="page-title title"><?php echo (!$edit_flg) ? '食べ物を投稿する' : '食べ物を編集する'; ?>料理を登録する</h1>
     </div>
     <section class="product-edit form-container">
       <form action="mypage.php" method="post" class="product-edit__form">
         <div class="area-msg">
-          金額には数字を入力してください<br>
-          料理名が長すぎます<br>
-          レシピは500文字までです
+          <?php
+          if (!empty($err_msg['common'])) echo $err_msg['common'];
+          ?>
         </div>
-        <label>
+        <label class="<?php if (!empty($err_msg['name'])) echo 'err'; ?>">
           料理名
-          <input type="text" name="name">
+          <input type="text" name="name" value="<?php echo getFormData('name'); ?>">
         </label>
-        <label>
-          カテゴリ
-          <select name="category" id="">
-            <option value="1">和食</option>
-            <option value="2">中華</option>
+        <div class="area-msg">
+          <?php
+          if (!empty($err_msg['name'])) echo $err_msg['name'];
+          ?>
+        </div>
+        <label class="<?php if (!empty($err_msg['category_id'])) echo 'err'; ?>">
+          カテゴリ<span class="label-require">必須</span>
+          <select name="category_id" id="">
+            <option value="0" <?php if (getformData('category_id') == 0) {
+                                echo 'selected';
+                              } ?>>選択してください</option>
+            <?php
+            foreach ($dbCategoryData as $key => $val) {
+            ?>
+              <option value="<?php echo $val['id'] ?>" <?php if (getFormData('category_id') == $val['id']) {
+                                                          echo 'selected';
+                                                        } ?>>
+                <?php echo $val['name']; ?>
+              </option>
+            <?php
+            }
+            ?>
           </select>
         </label>
-        <label>
+        <div class="area-msg">
+          <?php
+          if (!empty($err_msg['category_id'])) echo $err_msg['category_id'];
+          ?>
+        </div>
+        <label class="<?php if (!empty($err_msg['recipe'])) echo 'err'; ?>">
           レシピ
-          <textarea name="recipe" id="" cols="30" rows="10"></textarea>
+          <textarea name="recipe" id="js-count" cols="30" rows="10"><?php echo getFormData('recipe'); ?></textarea>
         </label>
-        <p class="counter-text">0/500文字</p>
-        <label>
+        <p class="counter-text"><span id="js-count-view">0</span>/500文字</p>
+        <div class="area-msg">
+          <?php
+          if (!empty($err_msg['recipe'])) echo $err_msg['recipe'];
+          ?>
+        </div>
+        <label class="<?php if (!empty($err_msg['comment'])) echo 'err'; ?>">
           詳細
-          <textarea name="comment" id="" cols="30" rows="10"></textarea>
+          <textarea name="comment" id="js-count" cols="30" rows="10"><?php echo getFormData('comment'); ?></textarea>
         </label>
-        <p class="counter-text">0/500文字</p>
-        <label>
-          金額
+        <p class="counter-text"><span id="js-count-view">0</span>/500文字</p>
+        <div class="area-msg">
+          <?php
+          if (!empty($err_msg['comment'])) echo $err_msg['comment'];
+          ?>
+        </div>
+        <label class="<?php if (!empty($err_msg['price'])) echo 'err'; ?>">
+          金額<span class="label-require">必須</span>
           <div class="product-edit__price">
-            <input type="text" name="price"><span class="option">円</span>
+            <input type="text" name="price" value="<?php echo (!empty(getformData('price'))) ? getFormData('price') : 0; ?>"><span class="option">円</span>
           </div>
         </label>
-        <label>
-          画像１
-          <div class="area-drop">
-            ここに画像をドラッグ＆ドロップ
+        <div class="area-msg">
+          <?php
+          if (!empty($err_msg['price'])) echo $err_msg['price'];
+          ?>
+        </div>
+        <div style="overflow:hidden">
+          <div class="imgDrop-container">
+            画像１
+            <label class="area-drop <?php if (!empty($err_msg['pic1'])) echo 'err'; ?>">
+              <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+              <input type="file" name="pic1" class="input-file">
+              <img src="<?php echo getFormData('pic1'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic1'))) echo 'display:none;' ?>">
+              ドラッグ＆ドロップ
+            </label>
+            <div class="area-msg">
+              <?php
+              if (!empty($err_msg['pic1'])) echo $err_msg['pic1'];
+              ?>
+            </div>
           </div>
-        </label>
-        <label>
-          画像２
-          <div class="area-drop">
-            ここに画像をドラッグ＆ドロップ
+          <div class="imgDrop-container">
+            画像２
+            <label class="area-drop <?php if (!empty($err_msg['pic2'])) echo 'err'; ?>">
+              <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+              <input type="file" name="pic2" class="input-file">
+              <img src="<?php echo getFormData('pic2'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic2'))) echo 'display:none;' ?>">
+              ドラッグ＆ドロップ
+            </label>
+            <div class="area-msg">
+              <?php
+              if (!empty($err_msg['pic2'])) echo $err_msg['pic2'];
+              ?>
+            </div>
           </div>
-        </label>
-        <label>
-          画像３
-          <div class="area-drop">
-            ここに画像をドラッグ＆ドロップ
+          <div class="imgDrop-container">
+            画像３
+            <label class="area-drop <?php if (!empty($err_msg['pic3'])) echo 'err'; ?>">
+              <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+              <input type="file" name="pic3" class="input-file">
+              <img src="<?php echo getFormData('pic3'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic3'))) echo 'display:none;' ?>">
+              ドラッグ＆ドロップ
+            </label>
+            <div class="area-msg">
+              <?php
+              if (!empty($err_msg['pic3'])) echo $err_msg['pic3'];
+              ?>
+            </div>
           </div>
-        </label>
+        </div>
 
         <div class="product-edit__btn-wrap btn-container">
-          <input type="submit" class="product-edit__btn btn" value="登録する">
+          <input type="submit" class="product-edit__btn btn" value="<?php echo (!$edit_flg) ? '登録する' : '更新する'; ?>">
         </div>
       </form>
     </section>

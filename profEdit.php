@@ -12,7 +12,7 @@ debugLogStart();
 require('auth.php');
 
 //================================
-// ログイン画面処理
+// 画面処理
 //================================
 // DBからユーザー情報を取得
 $dbFormData = getUser($_SESSION['user_id']);
@@ -65,14 +65,11 @@ if(!empty($_POST)){
 
       // クエリ成功の場合
       if($stmt){
-        debug('クエリ成功。');
+        $_SESSION['msg_success'] = SUC02;
         debug('マイページへ遷移します。');
-        header('Location:mypage.php');
-      }else{
-        debug('クエリの失敗しました。');
-        $err_msg['common'] = MSG08; // そのEmailは既に登録されています
+        header("Location:mypage.php"); // マイページへ
       }
-
+      
     }catch (Exception $e){
       error_log('エラー発生：' . $e->getMessage());
       $err_msg['common'] = MSG07; // エラーが発生しました。しばらく経ってからやり直してください。

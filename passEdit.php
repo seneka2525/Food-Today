@@ -69,8 +69,7 @@ if(!empty($_POST)){
 
         // クエリ成功の場合
         if($stmt){
-          debug('クエリ成功。');
-          $_SESSION['msg_success'] = SUC01; // パスワードを変更しました。
+          $_SESSION['msg_success'] = SUC01;
 
           // メールを送信
           $username = ($userData['username']) ? $userData['username'] : '名無し';
@@ -93,9 +92,6 @@ EOT;
           sendMail($from, $to, $subject, $comment);
 
           header("Location:mypage.php"); // マイページへ
-        }else{
-          debug('クエリに失敗しました。');
-          $err_msg['common'] = MSG07; // エラーが発生しました。しばらく経ってからやり直してください。
         }
 
       }catch(Exception $e) {

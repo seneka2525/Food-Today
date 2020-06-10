@@ -64,9 +64,11 @@ define('MSG11','古いパスワードと同じです');
 define('MSG12','文字で入力してください');
 define('MSG13','正しくありません');
 define('MSG14','有効期限がきれています');
+define('MSG15','半角数字のみご利用いただけます');
 define('SUC01','パスワードを変更しました');
 define('SUC02','プロフィールを変更しました');
 define('SUC03','メールを送信しました');
+define('SUC04','登録しました');
 
 //================================
 // バリデーション関数
@@ -76,7 +78,7 @@ $err_msg = array();
 
 // バリデーション関数（未入力チェック）
 function validRequired($str,$key){
-  if(empty($str)){
+  if($str === ''){ // 金額フォームなどを考えると数値の０はOKにし、空文字はダメにする
     global $err_msg;
     $err_msg[$key] = MSG01; // 入力必須です
   }
@@ -139,11 +141,17 @@ function validHalf($str, $key){
     $err_msg[$key] = MSG04; // 半角英数字のみご利用いただけます
   }
 }
+function validNumber($str, $key){
+  if(!preg_match("/^[0-9]+$/", $str)){
+    global $err_msg;
+    $err_msg[$key] = MSG15; // 半角数字のみご利用いただけます
+  }
+}
 // 固定長チェック
 function validLength($str, $key, $len = 8){
   if(mb_strlen($str) !== $len){
     global $err_msg;
-    $err_msg[$key] = $len . MSG12;
+    $err_msg[$key] = $len . MSG12; // ８文字で入力してください
   }
 }
 // パスワードチェック
@@ -154,6 +162,13 @@ function validPass($str, $key){
   validMaxLen($str, $key);
   // 最小文字数チェック
   validMinLen($str, $key);
+}
+// selectboxチェック
+function validSelect($str, $key){
+  if(!preg_match("/^[0-9]+$/", $str)){
+    global $err_msg;
+    $err_msg[$key] = MSG13; // 正しくありません
+  }
 }
 // エラーメッセージを表示
 function getErrMsg($key){
@@ -183,9 +198,15 @@ function dbConnect(){
 }
 // SQL実行関数
 function queryPost($dbh, $sql, $data){
+  // クエリー作成
   $stmt = $dbh->prepare($sql);
   // プレースホルダに値をセットし、SQL文を実行
-  $stmt->execute($data);
+  if(!$stmt->execute($data)){
+    debug('クエリに失敗しました。');
+    $err_msg['common'] = MSG07; //エラーが発生しました。
+    return 0;
+  }
+  debug('クエリ成功。');
   return $stmt;
 }
 // ユーザー情報取得
@@ -202,17 +223,72 @@ function getUser($u_id){
     $stmt = queryPost($dbh, $sql, $data);
 
     // クエリ成功の場合
+    // if($stmt){
+    //   debug('クエリ成功。');
+    // }else{
+    //   debug('クエリに失敗しました。');
+    // }
+    // クエリ結果のデータを１レコード返却
     if($stmt){
-      debug('クエリ成功。');
+      return $stmt->fetch(PDO::FETCH_ASSOC);
     }else{
-      debug('クエリに失敗しました。');
+      return false;
     }
 
   }catch (Exception $e) {
     error_log('エラー発生：' . $e->getMessage());
   }
   // クエリ結果の値を取得
-  return $stmt->fetch(PDO::FETCH_ASSOC);
+  // return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+function getProduct($u_id, $p_id){
+  debug('商品情報を取得します。');
+  debug('ユーザーID：'.$u_id);
+  debug('商品ID：'.$p_id);
+  // 例外処理
+  try {
+    // DBへ接続
+    $dbh = dbConnect();
+    // SQL文作成
+    $sql = 'SELECT * FROM product WHERE user_id = :u_id AND id = :p_id AND delete_flg = 0';
+    $data = array(':u_id' => $u_id, ':p_id' => $p_id);
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+
+    if($stmt){
+      // クエリ結果のデータを１レコード返却
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    }else{
+      return false;
+    }
+
+  } catch (Exception $e) {
+    error_log('エラー発生：' . $e->getMessage());
+  }
+}
+function getCategory(){
+  debug('カテゴリー情報を取得します。');
+  // 例外処理
+  try {
+    // DBへ接続
+    $dbh = dbConnect();
+    // SQL文作成
+    $sql = 'SELECT * FROM category';
+    $data = array();
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+    debug('DBのカテゴリーに情報：'.print_r($stmt,true));
+
+    if($stmt){
+      // クエリ結果の全データを返却
+      return $stmt->fetchAll();
+    }else{
+      return false;
+    }
+
+  } catch (Exception $e) {
+    error_log('エラー発生：' . $e->getMessage());
+  }
 }
 //================================
 // メール送信
@@ -240,13 +316,14 @@ function sendMail($from, $to, $subject, $comment){
 // フォーム入力保持
 function getFormData($str){
   global $dbFormData;
+  global $err_msg;
   // ユーザーデータがある場合
   if(!empty($dbFormData)){
     // フォームのエラーがある場合
     if(!empty($err_msg[$str])){
       // POSTにデータがある場合
-      if(isset($_POST[$str])){//金額や郵便番号などのフォームで数字や数値の0が入っている場合もあるので、issetを使うこと
-        return $dbFormData[$str];
+      if(isset($_POST[$str])){ //金額や郵便番号などのフォームで数字や数値の0が入っている場合もあるので、issetを使うこと
+        return $_POST[$str];
       }else{
         // ない場合（フォームにエラーがある＝POSTされているハズなので、まずありえないが）はDBの情報を表示
         return $dbFormData[$str];
@@ -282,4 +359,59 @@ function makeRandkey($length = 8) {
     $str .= $chars[mt_rand(0,62)];
   }
   return $str;
+}
+// 画像処理
+function uploadImg($file, $key){
+  debug('画像アップロード処理開始');
+  debug('FILE情報：'.print_r($file.true));
+
+  if(isset($file['error']) && is_int($file['error'])) {
+    try {
+      // バリデーション
+      // $file['error']の値を確認。配列内には「UPLOAD_ERR_OK」などの定数が入っている。
+      // 「UPLOAD_ERR_OK」などの定数はphpファイルアップロード時に自動的に定義される。
+      // 定数には値として0や1などの数値が入っている
+      switch ($file['error']) {
+        case UPLOAD_ERR_OK: // OK
+            break;
+        case UPLOAD_ERR_NO_FILE:  // ファイル未選択の場合
+            throw new RuntimeException('ファイルが選択されていません');
+        case UPLOAD_ERR_INI_SIZE:  // php.ini定義の最大サイズが超過した場合
+        case UPLOAD_ERR_FORM_SIZE: // フォーム定義の最大サイズが超過した場合
+            throw new RuntimeException('ファイルサイズが大きすぎます');
+        default: // その他の場合
+            throw new RuntimeException('その他のエラーが発生しました');
+      }
+
+      // $file['mime']の値はブラウザ側で偽装不可能なので、MIMEタイプを自前でチェックする
+      // exif_imagetype関数は「IMAGETYPE_GIF」「IMAGETYPE_JPEG」などの定数を返す
+      // exif_imagetype関数はエラーになる時があるのでエラーを無視する意味の「@」は必ずつける
+      $type = @exif_imagetype($file['tmp_name']);
+      // 第三引数にはtrueを設定すると厳密にチェックしてくれるので必ずつける
+      if(!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG,], true)) {
+          throw new RuntimeException('画像が未対応です');
+      }
+
+      // ファイルデータからSHA-1ハッシュを取ってファイル名を決定し、ファイルを保存する
+      // ハッシュ化しておかないとアップロードされたファイル名そのままで保存してしまうと同じファイル名が
+      // アップロードされる可能性があり、DBにパスを保存した場合、どっちの画像のパスなのか判断つかなくなってしまう
+      // image_type_to_extension関数はファイルの拡張子を取得するもの
+      $path = 'uploads/'.sha1_file($file['tmp_name']).image_type_to_extension($type);
+
+      if(!move_uploaded_file($file['tmp_name'], $path)) { // ファイルを移動する
+        throw new RuntimeException('ファイル保存時にエラーが発生しました');
+      }
+      // 保存したファイルパスのパーミッション（権限）を変更する
+      chmod($path, 0644);
+
+      debug('ファイルは正常にアップロードされました');
+      debug('ファイルパス：'.$path);
+      return $path;
+
+    } catch (RuntimeException $e) {
+      debug($e->getMessage());
+      global $err_msg;
+      $err_msg[$key] = $e->getMessage();
+    }
+  }
 }

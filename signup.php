@@ -81,9 +81,6 @@ if(!empty($_POST)){
           
           // マイページへ遷移
           header('Location:mypage.php');
-          }else{
-            debug('クエリに失敗しました。');
-            $err_msg['common'] = MSG07; // エラーが発生しました。しばらく経ってからやり直してください。
           }
 
         } catch (Exception $e){
@@ -126,28 +123,36 @@ if(!empty($_POST)){
         <form action="" method="post" class="signup__form">
           <h2 class="signup__title title">ユーザー登録</h2>
           <div class="area-msg">
-            <!-- phpのエラー表示用スタイル追加 -->
+            <?php
+            if(!empty($err_msg['common'])) echo $err_msg['common'];
+            ?>
           </div>
-          <label class="">
+          <label class="<?php if(!empty($err_msg['email'])) echo 'err'; ?>">
             Email
-            <input type="text" name="email" value="">
+            <input type="text" name="email" value="<?php if(!empty($_POST['email'])) echo $_POST['email']; ?>">
           </label>
           <div class="area-msg">
-            <!-- phpのエラー表示用スタイル追加 -->
+            <?php
+            if(!empty($err_msg['email'])) echo $err_msg['email'];
+            ?>
           </div>
-          <label class="">
+          <label class="<?php if(!empty($err_msg['pass'])) echo 'err'; ?>">
             パスワード <span>※英数字６文字以上</span>
-            <input type="password" name="pass" value="">
+            <input type="password" name="pass" value="<?php if(!empty($_POST['pass'])) echo $_POST['pass']; ?>">
           </label>
           <div class="area-msg">
-            <!-- phpのエラー表示用スタイル追加 -->
+            <?php
+            if(!empty($err_msg['pass'])) echo $err_msg['pass'];
+            ?>
           </div>
-          <label class="">
+          <label class="<?php if(!empty($err_msg['pass_re'])) echo 'err'; ?>">
             パスワード（再入力）
-            <input type="password" name="pass_re" value="">
+            <input type="password" name="pass_re" value="<?php if(!empty($_POST['pass_re'])) echo $_POST['pass_re']; ?>">
           </label>
           <div class="area-msg">
-            <!-- phpのエラー表示用スタイル追加 -->
+            <?php
+            if(!empty($err_msg['pass_re'])) echo $err_msg['pass_re'];
+            ?>
           </div>
           <div class="signup__btn-wrap btn-container">
             <input type="submit" class="signup__btn btn" value="登録する">
