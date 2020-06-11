@@ -203,6 +203,7 @@ function queryPost($dbh, $sql, $data){
   // プレースホルダに値をセットし、SQL文を実行
   if(!$stmt->execute($data)){
     debug('クエリに失敗しました。');
+    debug('失敗したSQL：'.print_r($stmt,true));
     $err_msg['common'] = MSG07; //エラーが発生しました。
     return 0;
   }
@@ -266,6 +267,68 @@ function getProduct($u_id, $p_id){
     error_log('エラー発生：' . $e->getMessage());
   }
 }
+function getProductList($currentMinNum = 1, $span = 8){
+  debug('食べ物情報を取得します。');
+  // 例外処理
+  try {
+    // DBへ接続
+    $dbh = dbConnect();
+    // 件数表示用のSQL文作成
+    $sql = 'SELECT id FROM product';
+    $data = array();
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+    $rst['total'] = $stmt->rowCount(); // 総レコード数
+    $rst['total_page'] = ceil($rst['total']/$span); //総ページ数
+    if(!$stmt){
+      return false;
+    }
+
+    // ページング用のSQL文作成
+    $sql = 'SELECT * FROM product';
+    $sql .= ' LIMIT '.$span. ' OFFSET '.$currentMinNum;
+    $data = array();
+    debug('SQL：'.$sql);
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+
+    if($stmt){
+      // クエリ結果のデータを全レコードを格納
+      $rst['data'] = $stmt->fetchAll();
+      return $rst;
+    }else{
+      return false;
+    }
+
+  } catch (Exception $e) {
+    error_log('エラー発生：' . $e->getMessage());
+  }
+}
+function getProductOne($p_id){
+  debug('食べ物情報を取得します。');
+  debug('商品ID：'.$p_id);
+  // 例外処理
+  try {
+    // DBへ接続
+    $dbh = dbConnect();
+    // SQL文作成
+    $sql = 'SELECT p.id , p.name , p.recipe , p.comment , p.price , p.pic1 , p.pic2 , p.pic3 , p.user_id , p.create_date , p.update_date , c.name AS category
+            FROM product AS p LEFT JOIN category AS c ON p.category_id = c.id WHERE p.id = p_id AND p.delete_flg = 0 AND c.delete_flg = 0';
+    $data = array(':p_id' => $p_id);
+    // クエリ実行
+    $stmt = queryPost($dbh, $sql, $data);
+
+    if($stmt){
+      // クエリ結果のデータを１レコード返却
+      return $stmt->fetch(PDO::FETCH_ASSOC);
+    }else{
+      return false;
+    }
+
+  } catch (Exception $e) {
+    error_log('エラー発生：' . $e->getMessage());
+  }
+}
 function getCategory(){
   debug('カテゴリー情報を取得します。');
   // 例外処理
@@ -312,6 +375,10 @@ function sendMail($from, $to, $subject, $comment){
 //================================
 // その他
 //================================
+// サニタイズ
+function sanitize($str){
+  return htmlspecialchars($str,ENT_QUOTES);
+}
 // フォーム入力保持
 function getFormData($str){
   global $dbFormData;
@@ -414,5 +481,36 @@ function uploadImg($file, $key){
       $err_msg[$key] = $e->getMessage();
 
     }
+  }
+}
+// ページング
+// $currentPageNum : 現在のページ数
+// $totalPageNum : 総ページ数
+// $link : 検索用GETパラメータリンク
+// $pageColNum : ページネーション表示数
+function pagination( $currentPageNum, $totalPageNum, $link = '', $pageColNum = 5){
+  
+}
+
+// 画像表示用関数
+function showimg($path){
+  if(empty($path)){
+    return 'img/sample-img.png';
+  }else{
+    return $path;
+  }
+}
+// GETパラメータ付与
+// $del_key : 付与から取り除きたいGETパラメータのキー
+function appendGetParam($arr_del_key){
+  if(!empty($_GET)){
+    $str = '?';
+    foreach($_GET as $key => $val){
+      if(!in_array($key,$arr_del_key,true)){ //取り除きたいパラメータじゃない場合にurlにくっつけるパラメータを生成
+        $str .= $key.'='.$val.'&';
+      }
+    }
+    $str = mb_substr($str, 0, -1, "UTF-8");
+    echo $str;
   }
 }
