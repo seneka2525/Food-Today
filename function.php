@@ -277,7 +277,6 @@ function getCategory(){
     $data = array();
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
-    debug('DBのカテゴリーに情報：'.print_r($stmt,true));
 
     if($stmt){
       // クエリ結果の全データを返却
@@ -363,7 +362,7 @@ function makeRandkey($length = 8) {
 // 画像処理
 function uploadImg($file, $key){
   debug('画像アップロード処理開始');
-  debug('FILE情報：'.print_r($file.true));
+  debug('FILE情報：'.print_r($file,true));
 
   if(isset($file['error']) && is_int($file['error'])) {
     try {
@@ -409,9 +408,11 @@ function uploadImg($file, $key){
       return $path;
 
     } catch (RuntimeException $e) {
+
       debug($e->getMessage());
       global $err_msg;
       $err_msg[$key] = $e->getMessage();
+
     }
   }
 }

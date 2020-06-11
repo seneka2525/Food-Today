@@ -186,7 +186,7 @@ require('head.php');
       <h1 class="page-title title"><?php echo (!$edit_flg) ? '食べ物を投稿する' : '食べ物を編集する'; ?></h1>
     </div>
     <section class="product-edit form-container">
-      <form action="mypage.php" method="post" class="product-edit__form">
+      <form action="" method="post" class="product-edit__form" enctype="multipart/form-data">
         <div class="area-msg">
           <?php
           if (!empty($err_msg['common'])) echo $err_msg['common'];
