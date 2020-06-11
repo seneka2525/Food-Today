@@ -227,9 +227,9 @@ require('head.php');
         </div>
         <label class="<?php if (!empty($err_msg['recipe'])) echo 'err'; ?>">
           レシピ
-          <textarea name="recipe" id="js-count" cols="30" rows="10"><?php echo getFormData('recipe'); ?></textarea>
+          <textarea name="recipe" id="comment1" cols="30" rows="10"><?php echo getFormData('recipe'); ?></textarea>
         </label>
-        <p class="counter-text"><span id="js-count-view">0</span>/500文字</p>
+        <p class="counter-text"><span id="count1">0</span>/500文字</p>
         <div class="area-msg">
           <?php
           if (!empty($err_msg['recipe'])) echo $err_msg['recipe'];
@@ -237,9 +237,9 @@ require('head.php');
         </div>
         <label class="<?php if (!empty($err_msg['comment'])) echo 'err'; ?>">
           詳細
-          <textarea name="comment" id="js-count" cols="30" rows="10"><?php echo getFormData('comment'); ?></textarea>
+          <textarea name="comment" id="comment2" cols="30" rows="10"><?php echo getFormData('comment'); ?></textarea>
         </label>
-        <p class="counter-text"><span id="js-count-view">0</span>/500文字</p>
+        <p class="counter-text"><span id="count2">0</span>/500文字</p>
         <div class="area-msg">
           <?php
           if (!empty($err_msg['comment'])) echo $err_msg['comment'];
@@ -326,4 +326,58 @@ require('head.php');
       <p class="footer__text">Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.</p>
     </div>
   </footer>
+
+  <script src="js/vendor/jquery-2.2.2.min.js"></script>
+  <!-- メッセージを表示 -->
+  <script>
+    $(function() {
+      var $jsShowMsg = $('#js-show-msg');
+      var msg = $jsShowMsg.text();
+      if (msg.replace(/^[\s　]+|[\s　]+$/g, "").length) {
+        $jsShowMsg.slideToggle('show');
+        setTimeout(function() {
+          $jsShowMsg.slideToggle('show');
+        }, 5000);
+      }
+
+      // 画像ライブプレビュー
+      var $dropArea = $('.area-drop');
+      var $fileInput = $('.input-file');
+      $dropArea.on('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('border', '3px #ccc dashed');
+      });
+      $dropArea.on('dragleave', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('border', 'none');
+      });
+      $fileInput.on('change', function(e) {
+        $dropArea.css('border', 'none');
+        var file = this.files[0],               // 2. files配列にファイルが入っています
+          $img = $(this).siblings('.prev-img'), // 3. jQueryのsiblingsメソッドで兄弟のimgを取得
+          fileReader = new FileReader();        // 4. ファイルを読み込むfileReaderオブジェクト
+
+        // 5. 読み込みが完了した際のイベントハンドラ。imgのsrcにデータをセット
+        fileReader.onload = function(event) {
+          // 読み込んだデータをimgに設定
+          $img.attr('src', event.target.result).show();
+        };
+
+        // 6. 画像読み込み
+        fileReader.readAsDataURL(file);
+
+      });
+
+      // テキストエリアカウント
+      $('#comment1,#comment2,#comment3').bind('keyup',function() {
+        for ( num=1; num<=3; num++ ) {
+            var thisValueLength = $('#comment' + num).val().replace(/\s+/g,'').length;
+            $("#count" + num).html(thisValueLength);
+        }
+    });
+
+    });
+  </script>
 </body>
