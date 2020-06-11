@@ -152,7 +152,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $siteTitle = (!$edit_flg) ? '食べ物登録' : '食べ物編集';
 require('head.php');
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -162,7 +162,7 @@ require('head.php');
   <link rel="stylesheet" type="text/css" href="dest/bundle.css">
   <link rel="stylesheet" href="text/css" href="style.css">
   <title>料理登録 | 今日、何食べる？</title>
-</head>
+</head> -->
 
 <body>
   <!-- ヘッダー -->
