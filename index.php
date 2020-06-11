@@ -119,53 +119,8 @@ require('head.php');
         ?>
 
       </div>
-
       <!-- ページネーション -->
-      <div class="pagination">
-        <ul class="pagination__list">
-          <?php
-          $pageColNum = 5;
-          $totalPageNum = $dbProductData['total_page'];
-          // 現在のページが、総ページ数と同じかつ総ページ数が表示項目以上なら、左にリンクを４個出す
-          if( $currentPageNum == $totalPageNum && $totalPageNum >= $pageColNum){
-            $minPageNum = $currentPageNum - 4;
-            $maxPageNum = $currentPageNum;
-          // 現在のページが、総ページ数の１ページ前なら、左にリンクを３個、右に１個出す
-          }elseif( $currentPageNum == ($totalPageNum-1) && $totalPageNum >= $pageColNum){
-            $minPageNum = $currentPageNum - 3;
-            $maxPageNum = $currentPageNum + 1;
-          // 現ページが２の場合は左にリンク１個、右に３個出す
-          }elseif( $currentPageNum == 2 && $totalPageNum >= $pageColNum){
-            $minPageNum = $currentPageNum - 1;
-            $maxPageNum = $currentPageNum + 3;
-          // 現ページが１の場合が左に何も出さない。右に５個出す。
-          }elseif( $currentPageNum == 1 && $totalPageNum >= $pageColNum){
-            $minPageNum = $currentPageNum;
-            $maxPageNum = 5;
-          // 総ページ数が表示項目数より少ない場合は、総ページ数をループのMax、ループのMinを１に設定
-          }elseif( $totalPageNum < $pageColNum){
-            $minPageNum = 1;
-            $maxPageNum = $totalPageNum;
-          // それ以外は左に２個出す。
-          }else{
-            $minPageNum = $currentPageNum - 2;
-            $maxPageNum = $currentPageNum + 2;
-          }
-          ?>
-          <?php if($currentPageNum != 1): ?>
-            <li class="list-item"><a href="?p=1">&lt;</a></li>
-           <?php endif; ?>
-           <?php
-            for($i = $minPageNum; $i <= $maxPageNum; $i++):
-           ?>
-            <li class="list-item <?php if($currentPageNum == $i ) echo 'active'; ?>"><a href="?p=<?php echo $i; ?>"><?php echo $i; ?></a></li>
-          <?php
-            endfor;
-          ?>
-          <?php if($currentPageNum != $maxPageNum): ?>
-            <li class="list-item"><a href="?p=<?php echo $maxPageNum; ?>">&gt;</a></li>
-          <?php endif; ?>
-      </div>
+      <?php pagination($currentPageNum, $dbProductData['total_page']); ?>
     </section>
   </div>
 
