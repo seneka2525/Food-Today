@@ -165,8 +165,12 @@ require('head.php');
 </head> -->
 
 <body>
+  <!-- メニュー -->
+  <?php
+  require('header.php');
+  ?>
   <!-- ヘッダー -->
-  <header class="header">
+  <!-- <header class="header">
     <div class="header__inner header-width">
       <h1 class="header__logo"><a href="index.php">今日、何食べる？</a></h1>
       <ul class="header__list">
@@ -174,12 +178,12 @@ require('head.php');
         <li class="header__link"><a href="logout.php">ログアウト</a></li>
       </ul>
     </div>
-  </header>
+  </header> -->
 
   <!-- 食べ物登録・編集フォーム -->
   <div class="site-width">
     <div class="page-title-wrap">
-      <h1 class="page-title title"><?php echo (!$edit_flg) ? '食べ物を投稿する' : '食べ物を編集する'; ?>料理を登録する</h1>
+      <h1 class="page-title title"><?php echo (!$edit_flg) ? '食べ物を投稿する' : '食べ物を編集する'; ?></h1>
     </div>
     <section class="product-edit form-container">
       <form action="mypage.php" method="post" class="product-edit__form">
