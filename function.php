@@ -313,7 +313,7 @@ function getProductOne($p_id){
     $dbh = dbConnect();
     // SQL文作成
     $sql = 'SELECT p.id , p.name , p.recipe , p.comment , p.price , p.pic1 , p.pic2 , p.pic3 , p.user_id , p.create_date , p.update_date , c.name AS category
-            FROM product AS p LEFT JOIN category AS c ON p.category_id = c.id WHERE p.id = p_id AND p.delete_flg = 0 AND c.delete_flg = 0';
+            FROM product AS p LEFT JOIN category AS c ON p.category_id = c.id WHERE p.id = :p_id AND p.delete_flg = 0 AND c.delete_flg = 0';
     $data = array(':p_id' => $p_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);

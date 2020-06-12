@@ -1,3 +1,31 @@
+<?php
+// 共通変数・関数読み込み
+require('function.php');
+
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debug('「食べ物詳細ページ」');
+debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
+debugLogStart();
+
+//================================
+// 画面処理
+//================================
+
+// 画面表示用データ取得
+//================================
+// 食べ物IDのGETパラメータを取得
+$p_id = (!empty($_GET['p_id'])) ? $_GET['p_id'] : '';
+// DBから食べ物データを取得
+$viewData = getproductOne($p_id);
+// パラメータに不正な値が入っているかチェック
+if(empty($viewData)){
+  error_log('エラー発生:指定ページに不正な値が入りました');
+  header("Location:index.php"); // トップページへ
+}
+debug('取得したDBデータ：'.print_r($viewData,true));
+
+debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -25,42 +53,31 @@
   <!-- 詳細表示 -->
   <div class="site-width">
     <div class="food-title">
-      <span class="badge">中華</span>
-      唐揚げ
+      <span class="badge"><?php echo sanitize($viewData['category']); ?></span>
+      <?php echo sanitize($viewData['name']); ?>
     </div>
     <div class="product-img-container">
       <div class="img-main">
-        <img src="images/price2.jpg" alt="">
+        <img src="<?php echo showImg(sanitize($viewData['pic1'])); ?>" alt="メイン画像：<?php echo sanitize($viewData['name']); ?>" id="js-switch-img-main">
       </div>
       <div class="img-sub">
-        <img src="images/price1.jpg" alt="">
-        <img src="images/price2.jpg" alt="">
-        <img src="images/price3.jpg" alt="">
+        <img src="<?php echo showImg(sanitize($viewData['pic1'])); ?>" alt="画像１：<?php echo sanitize($viewData['name']); ?>" class="js-switch-img-sub">
+        <img src="<?php echo showImg(sanitize($viewData['pic2'])); ?>" alt="画像２：<?php echo sanitize($viewData['name']); ?>" class="js-switch-img-sub">
+        <img src="<?php echo showImg(sanitize($viewData['pic3'])); ?>" alt="画像３：<?php echo sanitize($viewData['name']); ?>" class="js-switch-img-sub">
       </div>
     </div>
     <div class="product-detail-left">
-      <p class="product-detail-left__recipe">
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-        サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-      </p>
+      <p class="product-detail-left__recipe"><?php echo sanitize($viewData['recipe']); ?></p>
     </div>
     <div class="product-detail-right">
-      <p class="product-detail-right__comment">
-          サンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキストサンプルテキスト
-      </p>
+      <p class="product-detail-right__comment"><?php echo sanitize($viewData['comment']); ?></p>
     </div>
     <div class="product-item">
       <div class="product-item__left">
-          <a href="index.php">&lt; 料理一覧に戻る</a>
+          <a href="index.php<?php appendGetParam(array('p_id')); ?>">&lt; 料理一覧に戻る</a>
       </div>
       <div class="product-item__right">
-        <p class="product-item__price">¥750-</p>
+        <p class="product-item__price">¥<?php echo sanitize(number_format($viewData['price'])); ?></p>
       </div>
     </div>
   </div>
