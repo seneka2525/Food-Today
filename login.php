@@ -161,10 +161,8 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     </section>
   </div>
 
-  <!-- フッター -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <p class="footer__text">Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.</p>
-    </div>
-  </footer>
+  <!-- footer -->
+  <?php
+  require('footer.php');
+  ?>
 </body>

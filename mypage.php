@@ -187,26 +187,8 @@ require('auth.php');
     </aside>
   </div>
 
-  <!-- フッター -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <p class="footer__text">Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.</p>
-    </div>
-  </footer>
-
-  <script src="js/vendor/jquery-2.2.2.min.js"></script>
-  <!-- メッセージを表示 -->
-  <script>
-    $(function() {
-      var $jsShowMsg = $('#js-show-msg');
-      var msg = $jsShowMsg.text();
-      if (msg.replace(/^[\s　]+|[\s　]+$/g, "").length) {
-        $jsShowMsg.slideToggle('show');
-        setTimeout(function() {
-          $jsShowMsg.slideToggle('show');
-        }, 5000);
-      }
-
-    });
-  </script>
+  <!-- footer -->
+  <?php
+  require('footer.php');
+  ?>
 </body>
