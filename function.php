@@ -518,7 +518,7 @@ function pagination( $currentPageNum, $totalPageNum, $link = '', $pageColNum = 5
   echo '<div class="pagination">';
     echo '<ul class="pagination-list">';
       if($currentPageNum != 1){
-        echo '<li class="list-item"><a href="?p=1">'.$link.'">&lt;</a></li>';
+        echo '<li class="list-item"><a href="?p=1'.$link.'">&lt;</a></li>';
       }
       for($i = $minPageNum; $i <= $maxPageNum; $i++){
         echo '<li class="list-item ';
