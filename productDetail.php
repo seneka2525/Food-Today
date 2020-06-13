@@ -55,6 +55,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     <div class="food-title">
       <span class="badge"><?php echo sanitize($viewData['category']); ?></span>
       <?php echo sanitize($viewData['name']); ?>
+      <i class="fa fa-heart icn-like js-click-like <?php if(isLike($_SESSION['user_id'], $viewData['id'])){ echo 'active'; } ?>" aria-hidden="true" data-productid="<?php echo sanitize($viewData['id']); ?>" ></i>
     </div>
     <div class="product-img-container">
       <div class="img-main">

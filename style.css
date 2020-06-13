@@ -47,3 +47,16 @@ label.err input, label.err select{
 .form .counter-text{
   text-align: right;
 }
+
+/* お気に入りアイコン */
+.icn-like {
+  float: right;
+  color: #ddd;
+}
+.ecn-like:hover{
+  cursor: pointer;
+}
+.icn-like.active {
+  float: right;
+  color: #fe8a8b;
+}
