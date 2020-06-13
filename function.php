@@ -267,7 +267,7 @@ function getProduct($u_id, $p_id){
     error_log('エラー発生：' . $e->getMessage());
   }
 }
-function getProductList($currentMinNum = 1, $span = 8){
+function getProductList($currentMinNum = 1, $category, $sort, $span = 8){
   debug('食べ物情報を取得します。');
   // 例外処理
   try {
@@ -275,6 +275,17 @@ function getProductList($currentMinNum = 1, $span = 8){
     $dbh = dbConnect();
     // 件数表示用のSQL文作成
     $sql = 'SELECT id FROM product';
+    if(!empty($category)) $sql .= ' WHERE category_id = '.$category;
+    if(!empty($sort)){
+      switch($sort){
+        case 1:
+          $sql .= ' ORDER BY price ASC';
+          break;
+        case 2:
+          $sql .= ' ORDER BY price DESC';
+          break;
+      }
+    }
     $data = array();
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
@@ -286,6 +297,17 @@ function getProductList($currentMinNum = 1, $span = 8){
 
     // ページング用のSQL文作成
     $sql = 'SELECT * FROM product';
+    if(!empty($category)) $sql .= ' WHERE category_id = '.$category;
+    if(!empty($sort)){
+      switch($sort){
+        case 1:
+          $sql .= ' ORDER BY price ASC';
+          break;
+        case 2:
+          $sql .= ' ORDER BY price DESC';
+          break;
+      }
+    }
     $sql .= ' LIMIT '.$span. ' OFFSET '.$currentMinNum;
     $data = array();
     debug('SQL：'.$sql);
@@ -380,7 +402,12 @@ function sanitize($str){
   return htmlspecialchars($str,ENT_QUOTES);
 }
 // フォーム入力保持
-function getFormData($str){
+function getFormData($str, $flg = false){
+  if($flg){
+    $method = $_GET;
+  }else{
+    $method = $_POST;
+  }
   global $dbFormData;
   global $err_msg;
   // ユーザーデータがある場合
@@ -388,24 +415,24 @@ function getFormData($str){
     // フォームのエラーがある場合
     if(!empty($err_msg[$str])){
       // POSTにデータがある場合
-      if(isset($_POST[$str])){ //金額や郵便番号などのフォームで数字や数値の0が入っている場合もあるので、issetを使うこと
-        return $_POST[$str];
+      if(isset($method[$str])){ //金額や郵便番号などのフォームで数字や数値の0が入っている場合もあるので、issetを使うこと
+        return sanitize($method[$str]);
       }else{
         // ない場合（フォームにエラーがある＝POSTされているハズなので、まずありえないが）はDBの情報を表示
-        return $dbFormData[$str];
+        return sanitize($dbFormData[$str]);
       }
     }else{
       // POSTにデータがあり、DBの情報と違う場合（このフォームも変更していてエラーはないが、他のフォームでひっかかっている状態）
-      if(isset($_POST[$str]) && $_POST[$str] !== $dbFormData[$str]){
-        return $_POST[$str];
+      if(isset($method[$str]) && $method[$str] !== $dbFormData[$str]){
+        return sanitize($method[$str]);
       }else{ // そもそも変更していない
-        return $dbFormData[$str];
+        return sanitize($dbFormData[$str]);
       }
     }
   }else{
     // データベースに情報がない場合、フォームに入力された値を表示する
-    if(isset($_POST[$str])){
-      return $_POST[$str];
+    if(isset($method[$str])){
+      return sanitize($method[$str]);
     }
   }
 }
@@ -542,7 +569,7 @@ function showimg($path){
 }
 // GETパラメータ付与
 // $del_key : 付与から取り除きたいGETパラメータのキー
-function appendGetParam($arr_del_key){
+function appendGetParam($arr_del_key = array()){
   if(!empty($_GET)){
     $str = '?';
     foreach($_GET as $key => $val){
@@ -551,6 +578,6 @@ function appendGetParam($arr_del_key){
       }
     }
     $str = mb_substr($str, 0, -1, "UTF-8");
-    echo $str;
+    return $str;
   }
 }
