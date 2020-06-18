@@ -1,3 +1,4 @@
+/* スライドメッセージ表示用 */
 .msg-slide{
   position: fixed;
   top: 0;
@@ -8,10 +9,13 @@
   font-size: 16px;
   line-height: 40px;
 }
+
+/* エラーメッセージ表示用 */
 label.err input, label.err select{
   background: #f7dcd9;
 }
 
+/* 画像ドロップ */
 .form .area-drop{
   margin-bottom: 15px;
   width: 100%;
@@ -60,3 +64,4 @@ label.err input, label.err select{
   float: right;
   color: #fe8a8b;
 }
+
