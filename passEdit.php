@@ -102,30 +102,16 @@ EOT;
   }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="dest/bundle.css">
-  <link rel="stylesheet" href="text/css" href="style.css">
-  <title>パスワード変更 | 今日、何食べる？</title>
-</head>
-
+<!-- ヘッド -->
+<?php
+$siteTitle = 'HOME';
+require('head.php');
+?>
 <body>
   <!-- ヘッダー -->
-  <header class="header">
-    <div class="header__inner header-width">
-      <h1 class="header__logo"><a href="index.php">今日、何食べる？</a></h1>
-      <ul class="header__list">
-        <li class="header__link"><a href="mypage.php">マイページ</a></li>
-        <li class="header__link"><a href="logout.php">ログアウト</a></li>
-      </ul>
-    </div>
-  </header>
+<?php
+require('header.php');
+?>
 
   <!-- パスワード変更フォーム -->
   <div class="site-width">
