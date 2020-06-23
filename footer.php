@@ -1,15 +1,20 @@
 <!-- footer -->
 <footer class="footer">
   <div class="footer__inner">
-    <p class="footer__text">Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.</p>
+    <p class="footer__text">Copyright <a href="index.php" class="footer__text">WEBサービスOP</a>. All Rights Reserved.</p>
   </div>
 </footer>
 
 <!-- javascript -->
 <script src="js/vendor/jquery-2.2.2.min.js"></script>
-<!-- メッセージを表示 -->
 <script>
   $(function() {
+    // フッターを最下部に固定
+    var $ftr = $('.footer');
+    if( window.innerHeight > $ftr.offset().top + $ftr.outerHeight() ){
+      $ftr.attr({'style': 'position:fixed; top:' + (window.innerHeight - $ftr.outerHeight()) +'px;' });
+    }
+    // メッセージを表示
     var $jsShowMsg = $('#js-show-msg');
     var msg = $jsShowMsg.text();
     if (msg.replace(/^[\s　]+|[\s　]+$/g, "").length) {

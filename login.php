@@ -148,6 +148,7 @@ require('header.php');
       </form>
     </section>
   </div>
+  <a href="mypage.php">ok</a>
 
   <!-- footer -->
   <?php
