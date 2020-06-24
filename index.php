@@ -25,7 +25,7 @@ if(!is_int((int)$currentPageNum)){
   header("Location:index.php"); // トップページへ
 }
 // 表示件数
-$listSpan = 8;
+$listSpan = 20;
 // 現在の表示レコード先頭を算出
 $currentMinNum = (($currentPageNum-1)*$listSpan); // 1ページ目なら(1-1)*20 = 0 、  ２ページ目なら(2-1)*20 = 20
 // DBから食べ物データを取得

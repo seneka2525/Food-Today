@@ -293,7 +293,7 @@ function getProduct($u_id, $p_id){
     error_log('エラー発生：' . $e->getMessage());
   }
 }
-function getProductList($currentMinNum = 1, $category, $sort, $span = 8){
+function getProductList($currentMinNum = 1, $category, $sort, $span = 20){
   debug('食べ物情報を取得します。');
   // 例外処理
   try {
