@@ -42,42 +42,23 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $siteTitle = 'HOME';
 require('head.php');
 ?>
-<!-- <!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" type="text/css" href="dest/bundle.css">
-  <link rel="stylesheet" href="text/css" href="style.css">
-  <title>HOME | 今日、何食べる？</title>
-</head> -->
 
 <body>
-  <!-- ヘッダー -->
-  <!-- <header class="header">
-    <div class="header__inner header-width">
-      <h1 class="header__logo"><a href="index.php">今日、何食べる？</a></h1>
-      <ul class="header__list">
-        <li class="header__link"><a href="mypage.php">マイページ</a></li>
-        <li class="header__link"><a href="logout.php">ログアウト</a></li>
-      </ul>
-    </div>
-  </header> -->
+  
   <?php
   require('header.php');
   ?>
 
   <!-- メインコンテンツ -->
-  <div class="content content-width">
+  <div class="content site-width">
 
-    <!-- サイドバー (検索フォーム) -->
-    <aside class="content__2column">
+    <!-- サイドバー 検索フォーム -->
+    <aside class="content__2column index">
       <section class="search-form">
         <form name="" method="get">
           <h1 class="search-form__title">カテゴリー</h1>
           <div class="search-form__selectbox">
-            <select name="c_id" id="">
+            <select name="c_id" id="" class="search-form__input">
               <option value="0" <?php if(getFormData('c_id',true) == 0 ){ echo 'selected'; } ?> >選択してください</option>
               <?php
               foreach($dbCategoryData as $key => $val){
@@ -90,9 +71,9 @@ require('head.php');
               ?>
             </select>
           </div>
-          <h1 class="search-form__title">表示順</h1>
+          <h1 class="search-form__title sort">表示順</h1>
           <div class="search-form__selectbox">
-            <select name="sort">
+            <select name="sort" class="search-form__input">
               <option value="0" <?php if(getFormData('sort',true) == 0 ){ echo 'selected'; } ?> >選択してください</option>
               <option value="1" <?php if(getFormData('sort',true) == 1 ){ echo 'selected'; } ?> >金額が安い順</option>
               <option value="2" <?php if(getFormData('sort',true) == 2 ){ echo 'delected'; } ?> >金額が高い順</option>

@@ -84,32 +84,47 @@ a {
 // ヘッダー
 .header {
   width: 100%;
-  height: 100px;
+  height: 80px;
+  margin-bottom: 30px;
   background: #cbf3f0;
   &__inner {
-    height: 100px;
     width: 980px;
     margin: 0 auto;
-    padding-top: 20px;
     overflow: hidden;
   }
   &__logo {
+    margin: 0;
+    padding-left: 15px;
+    text-align: center;
     font-size: 30px;
+    line-height: 80px;
     float: left;
-    line-height: 60px;
     font-family: 'Fredoka One', cursive;
     &:hover {
       text-decoration: none;
     }
   }
-  &__list {
+  &__nav {
+    position: relative;
     float: right;
-    width: 300px;
-    margin: 20px 50px 0 0;
+    width: 500px;
+    height: 90px;
+  }
+  &__list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    width: 450px;
+    height: 80px;
+    line-height: 80px;
+  }
+  &__nav ul li {
+    float: right;
   }
   &__link > a{
-    float: left;
-    margin-right: 50px;
+    padding: 10px 15px; 
     font-size: 16px;
     font-weight: bold;
     &:hover {
@@ -134,6 +149,7 @@ a {
 .site-width {
   width: 980px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 // フォーム
@@ -181,7 +197,125 @@ input[type="submit"] {
 }
 .title {
   text-align: center;
-  font-size: 20px;
-  margin-bottom: 30px;
+  font-size: 32px;
+  margin-bottom: 50px;
   font-weight: bold;
+}
+
+// ========== サイドバー ==========
+// サイドバー共通
+.content__2column{
+  width: 200px;
+  float: left;
+  padding: 15px;
+  min-height: 600px;
+  background: #cbf3f059;
+}
+// index.php
+.content__2column.index {
+  margin-right: 20px;
+}
+// マイページ
+.content__2column.mypage {
+  margin-left: 20px;
+}
+
+.side-bar {
+  &__item {
+    margin-bottom: 15px;
+    display: block;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+.ly-main {
+  overflow: hidden;
+  margin: 20px auto;
+}
+.main__wrap {
+  width: 760px;
+  float: left;
+}
+.sub-title {
+  font-size: 1.5em;
+  padding-left: 10px;
+  margin-bottom: 15px;
+  border-left: solid 5px orange;
+  font-weight: bold;
+}
+.panel-list {
+  margin-bottom: 30px;
+  overflow: hidden;
+  &__img {
+    float: left;
+    margin: 0 50px 30px 0;
+  }
+  &__panel-head > img{
+    width: 330px;
+  }
+  &__panel-title {
+    font-size: 18px;
+  }
+}
+.price {
+  font-weight: bold;
+  display: block;
+  margin-top: 5px;
+}
+
+// トップページ
+.search-form {
+  &__title {
+    font-size: 16px;
+    font-weight: bold;
+    &.sort {
+      padding-top: 10px;
+    }
+  }
+  &__input {
+    padding: 10px;
+    width: 100%;
+  }
+  &__selectbox {
+    padding-top: 10px;
+  }
+}
+.main {
+  width: 760px;
+  float: left;
+}
+.search-title {
+  overflow: hidden;
+  margin-bottom: 30px;
+  padding: 5px 10px;
+  background: #cbf3f059;
+  line-height: 40px;
+}
+.search-left {
+  float: left;
+}
+.search-title .total-num {
+  padding-right: 5px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.search-right {
+  float: right;
+}
+// パネル
+.panel-list {
+  &> .panel {
+    float: left;
+    margin-bottom: 15px;
+    padding-right: 15px;
+    min-height: 185px;
+    width: 25%;
+    line-height: 1.2em;
+  }
+  &> .panel img {
+    width: 100%;
+  }
+  &__panel-title {
+    font-size: 16px;
+  }
 }
