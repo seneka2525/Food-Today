@@ -58,86 +58,22 @@ require('head.php');
           <h2 class="mypage-wrap__sub-title sub-title">投稿料理一覧</h2>
           <!-- パネル表示 -->
           <div class="panel-list">
-            <a href="productDetail.php" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
+            <?php
+              if(!empty($productData)):
+                foreach($productData as $key => $val):
+            ?>
+              <a href="registProduct.php<?php echo (!empty(appendGetParam())) ? appendGetParam().'&p_id='.$val['id'] : '?p_id='.$val['id']; ?>" class="panel">
+                <div class="panel-head">
+                  <img src="<?php echo showImg(sanitize($val['pic1'])); ?>" alt="<?php echo sanitize($val['name']); ?>">
+                </div>
+                <div class="panel-body">
+                  <p class="panel-title"><?php echo sanitize($val['name']); ?> <span class="price">¥<?php echo sanitize(number_format($val['price'])); ?></span></p>
+                </div>
+              </a>
+              <?php
+                endforeach;
+              endif;
+              ?>
           </div>
         </section>
 
@@ -146,38 +82,22 @@ require('head.php');
           <h2 class="like-wrap__sub-title sub-title">お気に入り一覧</h2>
           <!-- パネル表示 -->
           <div class="panel-list">
-            <a href="productDetail.php" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
-            <a href="productDetail.html" class="panel-list__img">
-              <div class="panel-list__panel-head">
-                <img src="images/price1.jpg" alt="食べ物タイトル">
-              </div>
-              <div class="panel-list__panel-body">
-                <p class="panel-list__panel-title">唐揚げ <span class="price">¥750</span></p>
-              </div>
-            </a>
+            <?php
+              if(!empty($likeData)):
+                foreach($likeData as $key => $val):
+            ?>
+              <a href="productDetail.php<?php echo (!empty(appendGetParam())) ? appendGetParam().'&p_id='.$val['id'] : '?p_id='.$val['id']; ?>" class="panel">
+                <div class="panel=head">
+                  <img src="<?php echo showImg(sanitize($val['pic1'])); ?>" alt="<?php echo sanitize($val['name']); ?>">
+                </div>
+                <div class="panel-body">
+                  <p class="panel-title"><?php echo sanitize($val['name']); ?> <span class="price">¥<?php echo sanitize(number_format($val['price'])); ?></span></p>
+                </div>
+              </a>
+              <?php
+                endforeach;
+              endif;
+              ?>
           </div>
         </section>
       </div>
