@@ -223,6 +223,10 @@ input[type="submit"] {
 .content__2column.mypage {
   margin-left: 20px;
 }
+// パスワード変更
+.content__2column.pass-edit {
+  margin-left: 20px;
+}
 
 .side-bar {
   &__item {
@@ -358,4 +362,97 @@ input[type="submit"] {
 .pagination .list-item a:hover {
   background: #333;
   color: white;
+}
+
+// パスワード変更
+.form-wrap{
+  border: solid 5px #cbf3f059;
+  width: 760px;
+  float: left;
+}
+.pass-edit{
+  border: none;
+  margin: 0 auto;
+}
+
+// 食べ物詳細
+.food-title {
+  font-size: 28px;
+  padding: 10px 0;
+}
+.badge {
+  padding: 5px 10px;
+  color: white;
+  background: #ffa500a8;
+  margin-right: 10px;
+  font-size: 16px;
+  vertical-align: middle;
+  position: relative;
+  top: -4px;
+}
+.product-img-container {
+  overflow: hidden;
+  width: 100%;
+  & .img-main {
+    width: 750px;
+    float: left;
+    padding-right: 15px;
+  }
+  & img {
+    width: 100%;
+  }
+  & .img-sub {
+    width: 230px;
+    float: left;
+    background: #cbf3f059;
+    padding: 15px;
+  }
+  & .img-sub img {
+    margin-bottom: 15px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+.detail-wrap {
+  overflow: hidden;
+  margin-top: 20px;
+}
+.recipe-wrap {
+  width: 490px;
+  float: left;
+}
+.detail-recipe {
+  text-align: center;
+}
+.comment-wrap {
+  width: 490px;
+  float: left;
+}
+.detail-comment {
+  text-align: center;
+}
+.product-detail-left {
+  background: #cbf3f059;
+  padding: 15px;
+
+  min-height: 150px;
+}
+.product-detail-right {
+  background: #cbf3f059;
+  padding: 15px;
+  min-height: 150px;
+  margin-left: 20px;
+}
+.product-item {
+  &__left {
+    float: left;
+  }
+  &__right {
+    float: right;
+  }
+  &__price {
+    font-size: 30px;
+    font-weight: bold;
+  }
 }

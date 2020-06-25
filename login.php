@@ -148,7 +148,7 @@ require('header.php');
       </form>
     </section>
   </div>
-  <a href="mypage.php">ok</a>
+  <a href="productDetail.php">ok</a>
 
   <!-- footer -->
   <?php
