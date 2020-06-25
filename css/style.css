@@ -149,7 +149,7 @@ label {
 label.err input, label.err select {
   background: #f7dcd9; }
 
-input[type="text"], input[type="password"], .form select,
+input[type="text"], input[type="password"], form select,
 textarea {
   display: block;
   margin-bottom: 15px;
@@ -176,6 +176,7 @@ input[type="submit"] {
   font-size: 14px; }
 
 .title {
+  padding-top: 20px;
   text-align: center;
   font-size: 32px;
   margin-bottom: 50px;
@@ -397,3 +398,64 @@ input[type="submit"] {
 .product-item__price {
   font-size: 30px;
   font-weight: bold; }
+
+.product-edit {
+  padding: 30px;
+  width: 100%; }
+
+form .label-require {
+  margin-left: 5px;
+  background: #fe8a8b;
+  font-size: 14px;
+  padding: 3px 5px;
+  color: white;
+  vertical-align: bottom; }
+
+.edit-text {
+  min-height: 300px; }
+
+.edit-option {
+  position: relative;
+  top: 40px;
+  display: block;
+  float: left;
+  padding-left: 10px; }
+
+.product-edit__price {
+  position: relative;
+  overflow: hidden; }
+  .product-edit__price > input {
+    float: left; }
+
+.product-edit .area-drop {
+  margin-bottom: 15px;
+  width: 100%;
+  height: 140px;
+  background: #cbf3f059;
+  color: #ccc;
+  text-align: center;
+  line-height: 150px;
+  position: relative; }
+
+.product-edit .input-file {
+  opacity: 0;
+  width: 100%;
+  height: 140px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2; }
+
+.product-edit .prev-img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+.product-edit .imgDrop-container {
+  width: 33.333%;
+  float: left;
+  padding-right: 15px; }
+
+.product-edit .counter-text {
+  text-align: right; }

@@ -8,7 +8,7 @@ debug('「「「「「「「「「「「「「「「「「「「「「「「「�
 debugLogStart();
 
 // ログイン認証
-require('auth.php');
+// require('auth.php');
 
 //================================
 // 画面処理
@@ -185,130 +185,132 @@ require('head.php');
     <div class="page-title-wrap">
       <h1 class="page-title title"><?php echo (!$edit_flg) ? '食べ物を投稿する' : '食べ物を編集する'; ?></h1>
     </div>
-    <section class="product-edit form-container">
-      <form action="" method="post" class="product-edit__form" enctype="multipart/form-data">
-        <div class="area-msg">
-          <?php
-          if (!empty($err_msg['common'])) echo $err_msg['common'];
-          ?>
-        </div>
-        <label class="<?php if (!empty($err_msg['name'])) echo 'err'; ?>">
-          料理名
-          <input type="text" name="name" value="<?php echo getFormData('name'); ?>">
-        </label>
-        <div class="area-msg">
-          <?php
-          if (!empty($err_msg['name'])) echo $err_msg['name'];
-          ?>
-        </div>
-        <label class="<?php if (!empty($err_msg['category_id'])) echo 'err'; ?>">
-          カテゴリ<span class="label-require">必須</span>
-          <select name="category_id" id="">
-            <option value="0" <?php if (getformData('category_id') == 0) {
-                                echo 'selected';
-                              } ?>>選択してください</option>
+    <div class="form-wrap">
+      <section class="product-edit">
+        <form action="" method="post" class="product-edit__form" enctype="multipart/form-data">
+          <div class="area-msg">
             <?php
-            foreach ($dbCategoryData as $key => $val) {
+            if (!empty($err_msg['common'])) echo $err_msg['common'];
             ?>
-              <option value="<?php echo $val['id'] ?>" <?php if (getFormData('category_id') == $val['id']) {
-                                                          echo 'selected';
-                                                        } ?>>
-                <?php echo $val['name']; ?>
-              </option>
+          </div>
+          <label class="<?php if (!empty($err_msg['name'])) echo 'err'; ?>">
+            料理名<span class="label-require">必須</span>
+            <input type="text" name="name" value="<?php echo getFormData('name'); ?>">
+          </label>
+          <div class="area-msg">
             <?php
-            }
+            if (!empty($err_msg['name'])) echo $err_msg['name'];
             ?>
-          </select>
-        </label>
-        <div class="area-msg">
-          <?php
-          if (!empty($err_msg['category_id'])) echo $err_msg['category_id'];
-          ?>
-        </div>
-        <label class="<?php if (!empty($err_msg['recipe'])) echo 'err'; ?>">
-          レシピ
-          <textarea name="recipe" id="comment1" cols="30" rows="10"><?php echo getFormData('recipe'); ?></textarea>
-        </label>
-        <p class="counter-text"><span id="count1">0</span>/500文字</p>
-        <div class="area-msg">
-          <?php
-          if (!empty($err_msg['recipe'])) echo $err_msg['recipe'];
-          ?>
-        </div>
-        <label class="<?php if (!empty($err_msg['comment'])) echo 'err'; ?>">
-          詳細
-          <textarea name="comment" id="comment2" cols="30" rows="10"><?php echo getFormData('comment'); ?></textarea>
-        </label>
-        <p class="counter-text"><span id="count2">0</span>/500文字</p>
-        <div class="area-msg">
-          <?php
-          if (!empty($err_msg['comment'])) echo $err_msg['comment'];
-          ?>
-        </div>
-        <label class="<?php if (!empty($err_msg['price'])) echo 'err'; ?>">
-          金額<span class="label-require">必須</span>
-          <div class="product-edit__price">
-            <input type="text" name="price" value="<?php echo (!empty(getformData('price'))) ? getFormData('price') : 0; ?>"><span class="option">円</span>
           </div>
-        </label>
-        <div class="area-msg">
-          <?php
-          if (!empty($err_msg['price'])) echo $err_msg['price'];
-          ?>
-        </div>
-        <div style="overflow:hidden">
-          <div class="imgDrop-container">
-            画像１
-            <label class="area-drop <?php if (!empty($err_msg['pic1'])) echo 'err'; ?>">
-              <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
-              <input type="file" name="pic1" class="input-file">
-              <img src="<?php echo getFormData('pic1'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic1'))) echo 'display:none;' ?>">
-              ドラッグ＆ドロップ
-            </label>
-            <div class="area-msg">
+          <label class="<?php if (!empty($err_msg['category_id'])) echo 'err'; ?>">
+            カテゴリ<span class="label-require">必須</span>
+            <select name="category_id" id="">
+              <option value="0" <?php if (getformData('category_id') == 0) {
+                                  echo 'selected';
+                                } ?>>選択してください</option>
               <?php
-              if (!empty($err_msg['pic1'])) echo $err_msg['pic1'];
+              foreach ($dbCategoryData as $key => $val) {
               ?>
+                <option value="<?php echo $val['id'] ?>" <?php if (getFormData('category_id') == $val['id']) {
+                                                            echo 'selected';
+                                                          } ?>>
+                  <?php echo $val['name']; ?>
+                </option>
+              <?php
+              }
+              ?>
+            </select>
+          </label>
+          <div class="area-msg">
+            <?php
+            if (!empty($err_msg['category_id'])) echo $err_msg['category_id'];
+            ?>
+          </div>
+          <label class="<?php if (!empty($err_msg['recipe'])) echo 'err'; ?>">
+            レシピ
+            <textarea name="recipe" id="comment1" class="edit-text" cols="30" rows="10"><?php echo getFormData('recipe'); ?></textarea>
+          </label>
+          <p class="counter-text"><span id="count1">0</span>/500文字</p>
+          <div class="area-msg">
+            <?php
+            if (!empty($err_msg['recipe'])) echo $err_msg['recipe'];
+            ?>
+          </div>
+          <label class="<?php if (!empty($err_msg['comment'])) echo 'err'; ?>">
+            詳細
+            <textarea name="comment" id="comment2" class="edit-text" cols="30" rows="10"><?php echo getFormData('comment'); ?></textarea>
+          </label>
+          <p class="counter-text"><span id="count2">0</span>/500文字</p>
+          <div class="area-msg">
+            <?php
+            if (!empty($err_msg['comment'])) echo $err_msg['comment'];
+            ?>
+          </div>
+          <label class="<?php if (!empty($err_msg['price'])) echo 'err'; ?>">
+            金額<span class="label-require">必須</span>
+            <div class="product-edit__price">
+              <input type="text" name="price" style="width:150px;" value="<?php echo (!empty(getformData('price'))) ? getFormData('price') : 0; ?>"><span class="edit-option">円</span>
+            </div>
+          </label>
+          <div class="area-msg">
+            <?php
+            if (!empty($err_msg['price'])) echo $err_msg['price'];
+            ?>
+          </div>
+          <div style="overflow:hidden">
+            <div class="imgDrop-container">
+              画像１
+              <label class="area-drop <?php if (!empty($err_msg['pic1'])) echo 'err'; ?>">
+                <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+                <input type="file" name="pic1" class="input-file">
+                <img src="<?php echo getFormData('pic1'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic1'))) echo 'display:none;' ?>">
+                ドラッグ＆ドロップ
+              </label>
+              <div class="area-msg">
+                <?php
+                if (!empty($err_msg['pic1'])) echo $err_msg['pic1'];
+                ?>
+              </div>
+            </div>
+            <div class="imgDrop-container">
+              画像２
+              <label class="area-drop <?php if (!empty($err_msg['pic2'])) echo 'err'; ?>">
+                <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+                <input type="file" name="pic2" class="input-file">
+                <img src="<?php echo getFormData('pic2'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic2'))) echo 'display:none;' ?>">
+                ドラッグ＆ドロップ
+              </label>
+              <div class="area-msg">
+                <?php
+                if (!empty($err_msg['pic2'])) echo $err_msg['pic2'];
+                ?>
+              </div>
+            </div>
+            <div class="imgDrop-container">
+              画像３
+              <label class="area-drop <?php if (!empty($err_msg['pic3'])) echo 'err'; ?>">
+                <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
+                <input type="file" name="pic3" class="input-file">
+                <img src="<?php echo getFormData('pic3'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic3'))) echo 'display:none;' ?>">
+                ドラッグ＆ドロップ
+              </label>
+              <div class="area-msg">
+                <?php
+                if (!empty($err_msg['pic3'])) echo $err_msg['pic3'];
+                ?>
+              </div>
             </div>
           </div>
-          <div class="imgDrop-container">
-            画像２
-            <label class="area-drop <?php if (!empty($err_msg['pic2'])) echo 'err'; ?>">
-              <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
-              <input type="file" name="pic2" class="input-file">
-              <img src="<?php echo getFormData('pic2'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic2'))) echo 'display:none;' ?>">
-              ドラッグ＆ドロップ
-            </label>
-            <div class="area-msg">
-              <?php
-              if (!empty($err_msg['pic2'])) echo $err_msg['pic2'];
-              ?>
-            </div>
-          </div>
-          <div class="imgDrop-container">
-            画像３
-            <label class="area-drop <?php if (!empty($err_msg['pic3'])) echo 'err'; ?>">
-              <input type="hidden" name="MAX_FILE_SIZE" value="3145728">
-              <input type="file" name="pic3" class="input-file">
-              <img src="<?php echo getFormData('pic3'); ?>" alt="" class="prev-img" style="<?php if (empty(getFormData('pic3'))) echo 'display:none;' ?>">
-              ドラッグ＆ドロップ
-            </label>
-            <div class="area-msg">
-              <?php
-              if (!empty($err_msg['pic3'])) echo $err_msg['pic3'];
-              ?>
-            </div>
-          </div>
-        </div>
 
-        <div class="product-edit__btn-wrap btn-container">
-          <input type="submit" class="product-edit__btn btn" value="<?php echo (!$edit_flg) ? '登録する' : '更新する'; ?>">
-        </div>
-      </form>
-    </section>
+          <div class="product-edit__btn-wrap btn-container">
+            <input type="submit" class="product-edit__btn btn" value="<?php echo (!$edit_flg) ? '登録する' : '更新する'; ?>">
+          </div>
+        </form>
+      </section>
+    </div>
 
     <!-- サイドバー -->
-    <aside class="content__2column">
+    <aside class="content__2column pass-edit">
       <section class="side-bar">
         <ul class="side-bar__list">
           <li class="side-bar__item"><a href="registProduct.php">料理を投稿する</a></li>
