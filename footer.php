@@ -18,15 +18,15 @@
     var $jsShowMsg = $('#js-show-msg');
     var msg = $jsShowMsg.text();
     if (msg.replace(/^[\s　]+|[\s　]+$/g, "").length) {
-      $jsShowMsg.slideToggle('show');
+      $jsShowMsg.slideToggle('slow');
       setTimeout(function() {
-        $jsShowMsg.slideToggle('show');
+        $jsShowMsg.slideToggle('slow');
       }, 5000);
     }
     // 画像ライブプレビュー
     var $dropArea = $('.area-drop');
     var $fileInput = $('.input-file');
-    $dropArea.on('click', function(e) {
+    $dropArea.on('dragover', function(e) {
       e.stopPropagation();
       e.preventDefault();
       $(this).css('border', '3px #ccc dashed');
@@ -67,11 +67,11 @@
       $switchImgMain.attr('src',$(this).attr('src'));
     });
 
-    // お気に入り登録・解除
+    // お気に入り登録・削除
     var $like,
         likeProductId;
-    $like = $('.js-click-like') || null; //nullというのはnull値という値で、「変数の中身は空ですよ」と明示するために使う値
-    likeProductId = $like.data('productId') || null;
+    $like = $('.js-click-like') || null; //nullというのはnull値という値で、「変数の中身は空ですよ」と明示するためにつかう値
+    likeProductId = $like.data('productid') || null;
     // 数値の０はfalseと判定されてしまう。product_idが０の場合もありえるので、０もtrueとする場合にはundefinedとnullを判定する
     if(likeProductId !== undefined && likeProductId !== null){
       $like.on('click',function(){
