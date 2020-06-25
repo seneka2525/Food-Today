@@ -322,7 +322,7 @@ input[type="submit"] {
   width: 760px;
   float: left; }
 
-.pass-edit {
+.pass-edit, .prof-edit {
   border: none;
   margin: 0 auto; }
 

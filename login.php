@@ -148,7 +148,7 @@ require('header.php');
       </form>
     </section>
   </div>
-  <a href="productDetail.php">ok</a>
+  <a href="profEdit.php">ok</a>
 
   <!-- footer -->
   <?php
