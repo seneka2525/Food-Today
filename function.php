@@ -618,19 +618,19 @@ function uploadImg($file, $key){
 // $pageColNum : ページネーション表示数
 function pagination( $currentPageNum, $totalPageNum, $link = '', $pageColNum = 5){
   // 現在のページが、総ページ数と同じかつ総ページ数が表示項目以上なら、左にリンクを４個出す
-  if( $currentPageNum == $totalPageNum && $totalPageNum >= $pageColNum){
+  if( $currentPageNum == $totalPageNum && $totalPageNum > $pageColNum){
     $minPageNum = $currentPageNum - 4;
     $maxPageNum = $currentPageNum;
   // 現在のページが、総ページ数の１ページ前なら、左にリンクを３個、右に１個出す
-  }elseif( $currentPageNum == ($totalPageNum-1) && $totalPageNum >= $pageColNum){
+  }elseif( $currentPageNum == ($totalPageNum-1) && $totalPageNum > $pageColNum){
     $minPageNum = $currentPageNum - 3;
     $maxPageNum = $currentPageNum + 1;
   // 現ページが２の場合は左にリンク１個、右に３個出す
-  }elseif( $currentPageNum == 2 && $totalPageNum >= $pageColNum){
+  }elseif( $currentPageNum == 2 && $totalPageNum > $pageColNum){
     $minPageNum = $currentPageNum - 1;
     $maxPageNum = $currentPageNum + 3;
   // 現ページが１の場合が左に何も出さない。右に５個出す。
-  }elseif( $currentPageNum == 1 && $totalPageNum >= $pageColNum){
+  }elseif( $currentPageNum == 1 && $totalPageNum > $pageColNum){
     $minPageNum = $currentPageNum;
     $maxPageNum = 5;
   // 総ページ数が表示項目数より少ない場合は、総ページ数をループのMax、ループのMinを１に設定
