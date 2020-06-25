@@ -119,14 +119,12 @@ body {
     .header__link > a:hover {
       text-decoration: underline; }
 
-.footer {
-  background: #cbf3f0;
+#footer {
+  padding: 15px;
   width: 100%;
-  height: 60px; }
-  .footer__text {
-    text-align: center;
-    height: 100%;
-    line-height: 60px; }
+  background: #cbf3f0;
+  text-align: center;
+  font-size: 12px; }
 
 .site-width {
   width: 980px;
@@ -220,7 +218,7 @@ input[type="submit"] {
   font-weight: bold; }
 
 .panel-list {
-  margin-bottom: 30px;
+  margin-right: -15px;
   overflow: hidden; }
   .panel-list__img {
     float: left;
@@ -236,21 +234,22 @@ input[type="submit"] {
   margin-top: 5px; }
 
 .search-form__title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold; }
   .search-form__title.sort {
     padding-top: 10px; }
 
 .search-form__input {
-  padding: 10px;
-  width: 100%; }
+  font-size: 14px;
+  border: 1px solid #ccc; }
 
 .search-form__selectbox {
   padding-top: 10px; }
 
 .main {
   width: 760px;
-  float: left; }
+  float: left;
+  min-height: 600px; }
 
 .search-title {
   overflow: hidden;
@@ -459,3 +458,6 @@ form .label-require {
 
 .product-edit .counter-text {
   text-align: right; }
+
+.btn {
+  cursor: pointer; }

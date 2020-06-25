@@ -148,7 +148,7 @@ require('header.php');
       </form>
     </section>
   </div>
-  <!-- <a href="registProduct.php">ok</a> -->
+  <a href="withdraw.php">ok</a>
 
   <!-- footer -->
   <?php

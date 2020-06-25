@@ -135,7 +135,7 @@ require('head.php');
             echo getErrMsg('pass_old');
             ?>
           </div>
-          <label class="<?php if (empty($err_msg['pass_new'])) echo 'err'; ?>">
+          <label class="<?php if (!empty($err_msg['pass_new'])) echo 'err'; ?>">
             新しいパスワード
             <input type="text" name="pass_new" value="<?php echo getFormData('pass_new'); ?>">
           </label>

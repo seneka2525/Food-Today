@@ -138,15 +138,19 @@ body {
 }
 
 // フッター
-.footer {
-  background: #cbf3f0;
+#footer {
+  padding: 15px;
   width: 100%;
-  height: 60px;
-  &__text {
-    text-align: center;
-    height: 100%;
-    line-height: 60px;
-  }
+  background: #cbf3f0;
+  text-align: center;
+  font-size:12px;
+  // width: 100%;
+  // height: 60px;
+  // &__text {
+  //   text-align: center;
+  //   height: 100%;
+  //   line-height: 60px;
+  // }
 }
 
 // レイアウト
@@ -253,7 +257,7 @@ input[type="submit"] {
   font-weight: bold;
 }
 .panel-list {
-  margin-bottom: 30px;
+  margin-right: -15px;
   overflow: hidden;
   &__img {
     float: left;
@@ -275,15 +279,22 @@ input[type="submit"] {
 // トップページ
 .search-form {
   &__title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     &.sort {
       padding-top: 10px;
     }
   }
   &__input {
-    padding: 10px;
-    width: 100%;
+    // padding: 10px;
+    // width: 100%;
+    // padding: 10px;
+    // width: 100%;
+    // border-color: #ccc;
+    // border-radius: 0;
+    // height: 21px;
+    font-size: 14px;
+    border: 1px solid #ccc;
   }
   &__selectbox {
     padding-top: 10px;
@@ -292,6 +303,7 @@ input[type="submit"] {
 .main {
   width: 760px;
   float: left;
+  min-height: 600px;
 }
 .search-title {
   overflow: hidden;
@@ -523,4 +535,8 @@ form .label-require {
   & .counter-text {
     text-align: right;
   }
+}
+// ボタン
+.btn {
+  cursor: pointer;
 }

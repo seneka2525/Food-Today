@@ -1,8 +1,11 @@
 <!-- footer -->
-<footer class="footer">
+<!-- <footer class="footer">
   <div class="footer__inner">
     <p class="footer__text">Copyright <a href="index.php" class="footer__text">WEBサービスOP</a>. All Rights Reserved.</p>
   </div>
+</footer> -->
+<footer id="footer">
+  Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.
 </footer>
 
 <!-- javascript -->
@@ -10,7 +13,7 @@
 <script>
   $(function() {
     // フッターを最下部に固定
-    var $ftr = $('.footer');
+    var $ftr = $('#footer');
     if( window.innerHeight > $ftr.offset().top + $ftr.outerHeight() ){
       $ftr.attr({'style': 'position:fixed; top:' + (window.innerHeight - $ftr.outerHeight()) +'px;' });
     }
