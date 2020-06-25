@@ -23,7 +23,7 @@ if(isset($_POST['productId']) && isset($_SESSION['user_id']) && isLogin()){
     // SQl文作成(レコードがあるか確認)
     // likeという単語はLIKE検索というSQLの命令文で使われているので、そのままでは使えないため、｀（バッククウォート）で囲む
     $sql = 'SELECT * FROM `like` WHERE product_id = :p_id AND user_id = :u_id';
-    $data = array('u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
+    $data = array(':u_id' => $_SESSION['user_id'], ':p_id' => $p_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
     $resultCount = $stmt->rowCount();
@@ -38,7 +38,7 @@ if(isset($_POST['productId']) && isset($_SESSION['user_id']) && isLogin()){
     }else{
       // レコードを挿入する
       $sql = 'INSERT INTO `like` (product_id, user_id, create_date) VALUES (:p_id, :u_id, :date)';
-      $data = array(':u_id' => $_SESSION['user_id'], ':p_id' => $p_id, 'date' => date('Y-m-d H:i:s'));
+      $data = array(':u_id' => $_SESSION['user_id'], ':p_id' => $p_id, ':date' => date('Y-m-d H:i:s'));
       // クエリ実行
       $stmt = queryPost($dbh, $sql, $data);
     }

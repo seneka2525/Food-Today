@@ -129,7 +129,7 @@ function validMinLen($str, $key, $min = 6){
 }
 // バリデーション関数（最大文字数チェック）
 function validMaxLen($str, $key, $max = 255){
-  if(mb_strlen($str > $max)){
+  if(mb_strlen($str) > $max){
     global $err_msg;
     $err_msg[$key] = MSG06; // 256文字以上で入力してください
   }
@@ -458,8 +458,8 @@ function getMyLike($u_id){
     // DBへ接続
     $dbh = dbConnect();
     // SQL文作成
-    $sql = 'SELECT * FROM `like` AS 1 LEFT JOIN product AS p ON 1.product_id = p.id WHERE 1.user_id = :u_id';
-    $data = array('u_id' => $u_id);
+    $sql = 'SELECT * FROM `like` AS l LEFT JOIN product AS p ON l.product_id = p.id WHERE l.user_id = :u_id';
+    $data = array(':u_id' => $u_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
 
@@ -546,11 +546,11 @@ function getSessionFlash($key){
   }
 }
 // 認証キー生成
-function makeRandkey($length = 8) {
+function makeRandKey($length = 8) {
   $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJLKMNOPQRSTUVWXYZ0123456789';
   $str = '';
   for($i = 0; $i < $length; ++$i) {
-    $str .= $chars[mt_rand(0,62)];
+    $str .= $chars[mt_rand(0,61)];
   }
   return $str;
 }
@@ -582,8 +582,8 @@ function uploadImg($file, $key){
       // exif_imagetype関数はエラーになる時があるのでエラーを無視する意味の「@」は必ずつける
       $type = @exif_imagetype($file['tmp_name']);
       // 第三引数にはtrueを設定すると厳密にチェックしてくれるので必ずつける
-      if(!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG,], true)) {
-          throw new RuntimeException('画像が未対応です');
+      if(!in_array($type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG], true)) {
+          throw new RuntimeException('画像形式が未対応です');
       }
 
       // ファイルデータからSHA-1ハッシュを取ってファイル名を決定し、ファイルを保存する
@@ -653,7 +653,7 @@ function pagination( $currentPageNum, $totalPageNum, $link = '', $pageColNum = 5
         if($currentPageNum == $i ){ echo 'active'; }
         echo '"><a href="?p='.$i.$link.'">'.$i.'</a></li>';
       }
-      if($currentPageNum != $maxPageNum){
+      if($currentPageNum != $maxPageNum && $maxPageNum > 1){
         echo '<li class="list-item"><a href="?p='.$maxPageNum.$link.'">&gt;</a></li>';
       }
       echo '</ul>';
@@ -661,7 +661,7 @@ function pagination( $currentPageNum, $totalPageNum, $link = '', $pageColNum = 5
 }
 
 // 画像表示用関数
-function showimg($path){
+function showImg($path){
   if(empty($path)){
     return 'img/sample-img.png';
   }else{

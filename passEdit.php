@@ -103,7 +103,7 @@ EOT;
 ?>
 <!-- ヘッド -->
 <?php
-$siteTitle = 'HOME';
+$siteTitle = 'パスワード変更';
 require('head.php');
 ?>
 

@@ -95,7 +95,7 @@ debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ?>
 <!-- ヘッド -->
 <?php
-$siteTitle = 'HOME';
+$siteTitle = 'ログイン';
 require('head.php');
 ?>
 <body>
@@ -148,8 +148,7 @@ require('header.php');
       </form>
     </section>
   </div>
-  <a href="withdraw.php">ok</a>
-
+  
   <!-- footer -->
   <?php
   require('footer.php');

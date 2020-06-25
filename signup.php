@@ -95,7 +95,7 @@ if(!empty($_POST)){
 ?>
 <!-- ヘッド -->
 <?php
-$siteTitle = 'HOME';
+$siteTitle = 'ユーザー登録';
 require('head.php');
 ?>
 <body>

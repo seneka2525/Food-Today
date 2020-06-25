@@ -105,7 +105,7 @@ EOT;
 ?>
 <!-- ヘッド -->
 <?php
-$siteTitle = 'HOME';
+$siteTitle = 'パスワード再発行メール送信';
 require('head.php');
 ?>
 <body>

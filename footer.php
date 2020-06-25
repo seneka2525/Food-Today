@@ -1,9 +1,3 @@
-<!-- footer -->
-<!-- <footer class="footer">
-  <div class="footer__inner">
-    <p class="footer__text">Copyright <a href="index.php" class="footer__text">WEBサービスOP</a>. All Rights Reserved.</p>
-  </div>
-</footer> -->
 <footer id="footer">
   Copyright <a href="index.php">WEBサービスOP</a>. All Rights Reserved.
 </footer>

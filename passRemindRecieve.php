@@ -113,7 +113,7 @@ EOT;
 ?>
 <!-- ヘッド -->
 <?php
-$siteTitle = 'HOME';
+$siteTitle = 'パスワード再発行認証';
 require('head.php');
 ?>
 <body>

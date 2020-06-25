@@ -19,7 +19,7 @@ $u_id = $_SESSION['user_id'];
 // DBから食べ物データを取得
 $productData = getMyProducts($u_id);
 // DBからお気に入りデータを取得
-$lideData = getMyLike($u_id);
+$likeData = getMyLike($u_id);
 
 // DBからデータがすべて取れているかのチェックは行わず、取れなければ何も表示しないこととする
 
@@ -87,7 +87,7 @@ require('head.php');
                 foreach($likeData as $key => $val):
             ?>
               <a href="productDetail.php<?php echo (!empty(appendGetParam())) ? appendGetParam().'&p_id='.$val['id'] : '?p_id='.$val['id']; ?>" class="panel">
-                <div class="panel=head">
+                <div class="panel-head">
                   <img src="<?php echo showImg(sanitize($val['pic1'])); ?>" alt="<?php echo sanitize($val['name']); ?>">
                 </div>
                 <div class="panel-body">
