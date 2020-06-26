@@ -564,3 +564,37 @@ html {
   .product-edit .imgDrop-container {
     float: none;
     width: 100%; } }
+
+@media only screen and (max-width: 736px) {
+  .badge {
+    margin: 5px;
+    position: relative; }
+  .food-title {
+    font-size: 20px; }
+  .product-img-container {
+    width: 100%; }
+    .product-img-container .img-main {
+      width: 100%;
+      float: none;
+      padding: 0 10px; }
+    .product-img-container .img-sub {
+      width: 100%; }
+      .product-img-container .img-sub img {
+        width: 33.333%;
+        float: left;
+        margin: 0;
+        padding-right: 10px; }
+  .recipe-wrap {
+    width: 100%; }
+  .comment-wrap {
+    width: 100%; }
+  .product-detail-left {
+    margin: 0 10px;
+    margin-bottom: 20px; }
+  .product-detail-right {
+    margin: 0 10px; }
+  .product-item__price {
+    padding: 20px;
+    font-size: 20px; }
+  .product-item__left {
+    padding: 20px; } }
