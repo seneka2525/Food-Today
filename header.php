@@ -6,13 +6,13 @@
         <?php
         if (empty($_SESSION['user_id'])) {
         ?>
-          <li class="header__link"><a href="signup.php">ユーザー登録</a></li>
           <li class="header__link"><a href="login.php">ログイン</a></li>
+          <li class="header__link"><a href="signup.php">ユーザー登録</a></li>
         <?php
         } else {
         ?>
-          <li class="header__link"><a href="mypage.php">マイページ</a></li>
           <li class="header__link"><a href="logout.php">ログアウト</a></li>
+          <li class="header__link"><a href="mypage.php">マイページ</a></li>
         <?php
         }
         ?>
