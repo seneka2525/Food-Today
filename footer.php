@@ -85,6 +85,9 @@
       });
     }
     
+    // テキストエリアで絵文字を使用
+    // $('#comment1').twemojiPicker();
+    // $('#comment2').twemojiPicker();
   });
 </script>
 </body>
