@@ -93,4 +93,3 @@ require('head.php');
   <?php
   require('footer.php');
   ?>
-  <?php debug('ここまできた？'); ?>

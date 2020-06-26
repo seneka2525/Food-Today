@@ -84,6 +84,9 @@ a {
 body {
   line-height: 150%;
 }
+textarea {
+  white-space: pre-wrap;
+}
 
 // ヘッダー
 .header {
