@@ -84,9 +84,6 @@ a {
 body {
   line-height: 150%;
 }
-textarea {
-  white-space: pre-wrap;
-}
 
 // ヘッダー
 .header {
@@ -451,14 +448,21 @@ input[type="submit"] {
 .product-detail-left {
   background: #cbf3f059;
   padding: 15px;
-
-  min-height: 150px;
+  min-height: 200px;
+  &__recipe {
+    white-space: pre-wrap;
+    width: 100%;
+  }
 }
 .product-detail-right {
   background: #cbf3f059;
   padding: 15px;
-  min-height: 150px;
+  min-height: 200px;
   margin-left: 20px;
+  &__comment {
+    white-space: pre-wrap;
+    width: 100%;
+  }
 }
 .product-item {
   &__left {

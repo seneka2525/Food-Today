@@ -77,9 +77,6 @@ a {
 body {
   line-height: 150%; }
 
-textarea {
-  white-space: pre-wrap; }
-
 .header {
   width: 100%;
   height: 80px;
@@ -383,13 +380,19 @@ input[type="submit"] {
 .product-detail-left {
   background: #cbf3f059;
   padding: 15px;
-  min-height: 150px; }
+  min-height: 200px; }
+  .product-detail-left__recipe {
+    white-space: pre-wrap;
+    width: 100%; }
 
 .product-detail-right {
   background: #cbf3f059;
   padding: 15px;
-  min-height: 150px;
+  min-height: 200px;
   margin-left: 20px; }
+  .product-detail-right__comment {
+    white-space: pre-wrap;
+    width: 100%; }
 
 .product-item__left {
   float: left; }
