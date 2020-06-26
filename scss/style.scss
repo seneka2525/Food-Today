@@ -136,7 +136,24 @@ body {
     }
   }
 }
-
+//================================
+// レスポンシブ
+//================================
+// SP対応
+@media only screen and(max-width:736px){
+  .header {
+    &__logo {
+      font-size: 16px;
+    }
+    &__nav {
+      position: static;
+    }
+    &__link > a {
+      font-size: 12px;
+      padding-left: 5px;
+    }
+  }
+}
 // フッター
 #footer {
   padding: 15px;
@@ -158,6 +175,15 @@ body {
   width: 980px;
   margin: 20px auto;
   overflow: hidden;
+}
+//================================
+// レスポンシブ
+//================================
+// SP対応
+@media only screen and(max-width:736px){
+  .site-width {
+    width: 100%;
+  }
 }
 
 // フォーム
@@ -210,6 +236,16 @@ input[type="submit"] {
   margin-bottom: 50px;
   font-weight: bold;
 }
+//================================
+// レスポンシブ
+//================================
+// SP対応
+@media only screen and(max-width:736px){
+  .form-container {
+    width: 95%;
+    padding: 30px;
+  }
+}
 
 // ========== サイドバー ==========
 // サイドバー共通
@@ -231,6 +267,18 @@ input[type="submit"] {
 // パスワード変更
 .content__2column.pass-edit {
   margin-left: 20px;
+}
+//================================
+// レスポンシブ
+//================================
+// SP対応
+@media only screen and(max-width:736px){
+  .content__2column{
+    margin: 0 0 50px 0;
+    min-height: 0;
+    width: 100%;
+    background: #f6f5f4;
+  }
 }
 
 .side-bar {
@@ -313,6 +361,7 @@ input[type="submit"] {
   background: #cbf3f059;
   line-height: 40px;
 }
+
 .search-left {
   float: left;
 }
@@ -324,6 +373,30 @@ input[type="submit"] {
 .search-right {
   float: right;
 }
+
+//================================
+// レスポンシブ
+//================================
+@media only screen and(max-width:736px){
+  .search-title .total-num {
+    font-size: 18px;
+  }
+  .search-left {
+    font-size: 16px;
+    padding-right: 10px;
+    float: none;
+    text-align: center;
+  }
+  .search-right {
+    font-size: 16px;
+    float: none;
+    text-align: center;
+    & .num {
+      font-size: 16px;
+    }
+  }
+}
+
 // パネル
 .panel-list {
   &> .panel {
@@ -586,4 +659,60 @@ form .label-require {
 
 html {
   font-family: MyFontFamily, sans-serif;
+}
+//================================
+// レスポンシブ
+//================================
+@media only screen and(max-width:736px){
+  .main {
+    width: 100%;
+  }
+}
+@media only screen and(max-width:736px){
+  .panel-list {
+    width: 100%;
+    margin: 0;
+    min-height: 200px;
+    & > .panel {
+      width: 50%;
+      padding: 10px;
+    }
+  }
+}
+//================================
+// レスポンシブ
+//================================
+// マイページ
+@media only screen and(max-width:736px){
+  .main__wrap {
+    width: 100%;
+  }
+  .sub-title{
+    margin: 0 auto;
+    width: 50%;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+}
+@media only screen and(max-width:736px){
+  .content__2column.mypage{
+    margin: 0;
+  }
+}
+// プロフィール編集
+@media only screen and(max-width:736px){
+  .form-wrap{
+    width: 100%;
+  }
+  .content__2column.pass-edit{
+    margin: 0;
+  }
+}
+// 投稿・編集フォーム
+@media only screen and(max-width:736px){
+  .product-edit .imgDrop-container{
+    float: none;
+    width: 100%;
+
+  }
 }

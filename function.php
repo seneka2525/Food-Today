@@ -11,7 +11,7 @@ ini_set('error_log','php.log');
 // デバッグ
 //================================
 // デバッグフラグ
-$debug_flg = true;
+$debug_flg = false;
 // デバッグログ関数
 function debug($str){
   global $debug_flg;
@@ -385,7 +385,7 @@ function getMyProducts($u_id){
     // DBへ接続
     $dbh = dbConnect();
     // SQL文作成
-    $sql = 'SELECT * FROM product WHERE user_id = :u_id AND delete_flg = 0';
+    $sql = 'SELECT * FROM product WHERE user_id = :u_id AND delete_flg = 0  order by id desc';
     $data = array(':u_id' => $u_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);
@@ -458,7 +458,7 @@ function getMyLike($u_id){
     // DBへ接続
     $dbh = dbConnect();
     // SQL文作成
-    $sql = 'SELECT * FROM `like` AS l LEFT JOIN product AS p ON l.product_id = p.id WHERE l.user_id = :u_id';
+    $sql = 'SELECT * FROM `like` AS l LEFT JOIN product AS p ON l.product_id = p.id WHERE l.user_id = :u_id  order by id desc';
     $data = array(':u_id' => $u_id);
     // クエリ実行
     $stmt = queryPost($dbh, $sql, $data);

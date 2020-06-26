@@ -119,6 +119,15 @@ body {
     .header__link > a:hover {
       text-decoration: underline; }
 
+@media only screen and (max-width: 736px) {
+  .header__logo {
+    font-size: 16px; }
+  .header__nav {
+    position: static; }
+  .header__link > a {
+    font-size: 12px;
+    padding-left: 5px; } }
+
 #footer {
   padding: 15px;
   width: 100%;
@@ -130,6 +139,10 @@ body {
   width: 980px;
   margin: 20px auto;
   overflow: hidden; }
+
+@media only screen and (max-width: 736px) {
+  .site-width {
+    width: 100%; } }
 
 .form-container {
   margin: 100px auto;
@@ -180,6 +193,11 @@ input[type="submit"] {
   margin-bottom: 50px;
   font-weight: bold; }
 
+@media only screen and (max-width: 736px) {
+  .form-container {
+    width: 95%;
+    padding: 30px; } }
+
 .content__2column {
   width: 200px;
   float: left;
@@ -195,6 +213,13 @@ input[type="submit"] {
 
 .content__2column.pass-edit {
   margin-left: 20px; }
+
+@media only screen and (max-width: 736px) {
+  .content__2column {
+    margin: 0 0 50px 0;
+    min-height: 0;
+    width: 100%;
+    background: #f6f5f4; } }
 
 .side-bar__item {
   margin-bottom: 15px;
@@ -270,6 +295,21 @@ input[type="submit"] {
 
 .search-right {
   float: right; }
+
+@media only screen and (max-width: 736px) {
+  .search-title .total-num {
+    font-size: 18px; }
+  .search-left {
+    font-size: 16px;
+    padding-right: 10px;
+    float: none;
+    text-align: center; }
+  .search-right {
+    font-size: 16px;
+    float: none;
+    text-align: center; }
+    .search-right .num {
+      font-size: 16px; } }
 
 .panel-list > .panel {
   float: left;
@@ -492,3 +532,40 @@ form .label-require {
 
 html {
   font-family: MyFontFamily, sans-serif; }
+
+@media only screen and (max-width: 736px) {
+  .main {
+    width: 100%; } }
+
+@media only screen and (max-width: 736px) {
+  .panel-list {
+    width: 100%;
+    margin: 0;
+    min-height: 200px; }
+    .panel-list > .panel {
+      width: 50%;
+      padding: 10px; } }
+
+@media only screen and (max-width: 736px) {
+  .main__wrap {
+    width: 100%; }
+  .sub-title {
+    margin: 0 auto;
+    width: 50%;
+    margin-bottom: 10px;
+    font-size: 20px; } }
+
+@media only screen and (max-width: 736px) {
+  .content__2column.mypage {
+    margin: 0; } }
+
+@media only screen and (max-width: 736px) {
+  .form-wrap {
+    width: 100%; }
+  .content__2column.pass-edit {
+    margin: 0; } }
+
+@media only screen and (max-width: 736px) {
+  .product-edit .imgDrop-container {
+    float: none;
+    width: 100%; } }

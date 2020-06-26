@@ -144,7 +144,7 @@ require('header.php');
           <div class="login__btn-wrap btn-container">
             <input type="submit" class="login__btn btn" value="ログイン">
           </div>
-          パスワードを忘れた方は<a href="passRemindSend.php">こちら</a>
+          パスワードを忘れた方は<a href="passRemindSend.php" style="color:darkseagreen">コチラ</a>
       </form>
     </section>
   </div>
