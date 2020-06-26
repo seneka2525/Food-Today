@@ -68,12 +68,12 @@ label.err input, label.err select{
 // テキストベース
 * {
   color: #333;
-  @font-face
-{
-font-family:"源ノ角ゴシック Normal" ;
-src: url('https://cdn.leafscape.be/SourceHanSansJP/SourceHanSansJP-Normal_web.woff')
-     format("woff");
-}
+//   @font-face
+// {
+// font-family:"源ノ角ゴシック Normal" ;
+// src: url('https://cdn.leafscape.be/SourceHanSansJP/SourceHanSansJP-Normal_web.woff')
+//      format("woff");
+// }
 }
 
 // aタグ

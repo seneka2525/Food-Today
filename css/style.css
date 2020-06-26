@@ -66,11 +66,6 @@ label.err input, label.err select {
 * {
   color: #333; }
 
-@font-face {
-  * {
-    font-family: "源ノ角ゴシック Normal";
-    src: url("https://cdn.leafscape.be/SourceHanSansJP/SourceHanSansJP-Normal_web.woff") format("woff"); } }
-
 a {
   text-decoration: none; }
 
