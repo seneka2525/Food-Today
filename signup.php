@@ -17,9 +17,9 @@ if(!empty($_POST)){
   $pass_re = $_POST['pass_re'];
 
   // 未入力チェック
-  validrequired($email,'email');
-  validrequired($pass,'pass');
-  validrequired($pass_re,'pass_re');
+  validRequired($email,'email');
+  validRequired($pass,'pass');
+  validRequired($pass_re,'pass_re');
 
   // エラーメッセージがない場合
   if(empty($err_msg)){

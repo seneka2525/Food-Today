@@ -24,11 +24,11 @@ if(!empty($_POST)){
     // DBへ接続
     $dbh = dbConnect();
     // SQL文作成
-    $sql1 = 'UPDATE users SET delete_flg = 1 WHERE id = :u_id';
-    $sql2 = 'UPDATE product SET delete_flg = 1 WHERE user_id = :u_id';
-    $sql3 = 'UPDATE like SET delete_flg = 1 WHERE user_id = :u_id';
+    $sql1 = 'UPDATE users SET delete_flg = 1 WHERE id = :us_id';
+    $sql2 = 'UPDATE product SET delete_flg = 1 WHERE user_id = :us_id';
+    $sql3 = 'UPDATE like SET delete_flg = 1 WHERE user_id = :us_id';
     // データ流し込み
-    $data = array(':u_id' => $_SESSION['user_id']);
+    $data = array(':us_id' => $_SESSION['user_id']);
     // クエリ実行
     $stmt1 = queryPost($dbh, $sql1, $data);
     $stmt2 = queryPost($dbh, $sql2, $data);

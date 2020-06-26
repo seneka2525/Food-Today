@@ -44,7 +44,7 @@ if(!empty($_POST)){
 
     // 例外処理
     try {
-      $dbh = dbconnect();
+      $dbh = dbConnect();
       // SQL文作成
       $sql = 'SELECT password,id FROM users WHERE email = :email AND delete_flg = 0';
       $data = array(':email' => $email);
@@ -105,7 +105,7 @@ require('header.php');
 ?>
 
   <!-- jsでログインのメッセージを出す -->
-  <p id="js-show-msg" style="display: none" class="msg-slide">
+  <p id="js-show-msg" style="display:none;" class="msg-slide">
     <?php echo getSessionFlash('msg_success'); ?>
   </p>
 

@@ -50,7 +50,7 @@ if(!empty($_POST)){
       if(empty($err_msg)){
         debug('認証キーOK!!');
 
-        $pass = makeRandkey(); // パスワード生成
+        $pass = makeRandKey(); // パスワード生成
         // debug('生成されたパスワードはこれ：'.print_r($pass,true));
 
         // 例外処理
@@ -99,7 +99,7 @@ EOT;
 
           }else{
             debug('クエリに失敗しました。');
-            $err_msg['common'];
+            $err_msg['common'] = MSG07;
           }
 
         } catch (Exception $e) {
@@ -122,7 +122,7 @@ require('head.php');
 require('header.php');
 ?>
 
-  <p id="js-show-msg" style="display:none" class="msg-slide">
+  <p id="js-show-msg" style="display:none;" class="msg-slide">
     <?php echo getSessionFlash('msg_success'); ?>
   </p>
 
@@ -142,7 +142,7 @@ require('header.php');
           <?php if(!empty($err_msg['token'])) echo $err_msg['token']; ?>
         </div>
         <div class="withdraw__btn-wrap btn-container">
-          <input type="submit" class="pass-send__btn btn" value="変更画面へ">
+          <input type="submit" class="pass-send__btn btn" value="再発行する">
         </div>
       </form>
     </section>

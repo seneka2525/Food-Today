@@ -1,6 +1,6 @@
 <?php
 // 共通変数・関数ファイル読み込み
-require('funtion.php');
+require('function.php');
 
 debug('「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「「');
 debug('「Ajax」');
@@ -47,5 +47,5 @@ if(isset($_POST['productId']) && isset($_SESSION['user_id']) && isLogin()){
     error_log('エラー発生：' . $e->getMessage());
   }
 }
-debug('画面表示処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+debug('Ajax処理終了 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 ?>

@@ -4,7 +4,7 @@
 //================================
 // ログを取るか
 ini_set('log_errors','on');
-// ログの出力先ファイルを指定
+// ログの出力ファイルを指定
 ini_set('error_log','php.log');
 
 //================================
@@ -40,9 +40,9 @@ function debugLogStart(){
   debug('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 画面表示処理開始');
   debug('セッションID：'.session_id());
   debug('セッション変数の中身：'.print_r($_SESSION,true));
-  debug('偏在日時タイムスタンプ：'.time());
+  debug('現在日時タイムスタンプ：'.time());
   if(!empty($_SESSION['login_date']) && !empty($_SESSION['login_limit'])){
-    debug('ログイン期限日時タイムスタンプ：'.($_SESSION['login_date'] + $_SESSION['login_limit']));
+    debug( 'ログイン期限日時タイムスタンプ：'.( $_SESSION['login_date'] + $_SESSION['login_limit'] ) );
   }
 }
 
@@ -354,13 +354,13 @@ function getProductList($currentMinNum = 1, $category, $sort, $span = 20){
 }
 function getProductOne($p_id){
   debug('食べ物情報を取得します。');
-  debug('商品ID：'.$p_id);
+  debug('食べ物ID：'.$p_id);
   // 例外処理
   try {
     // DBへ接続
     $dbh = dbConnect();
     // SQL文作成
-    $sql = 'SELECT p.id , p.name , p.recipe , p.comment , p.price , p.pic1 , p.pic2 , p.pic3 , p.user_id , p.create_date , p.update_date , c.name AS category
+    $sql = 'SELECT p.id , p.name , p.recipe, p.comment, p.price, p.pic1, p.pic2, p.pic3, p.user_id, p.create_date, p.update_date, c.name AS category
             FROM product AS p LEFT JOIN category AS c ON p.category_id = c.id WHERE p.id = :p_id AND p.delete_flg = 0 AND c.delete_flg = 0';
     $data = array(':p_id' => $p_id);
     // クエリ実行
@@ -451,8 +451,8 @@ function isLike($u_id, $p_id){
   }
 }
 function getMyLike($u_id){
-  debug('自分のお気に入り情婦を取得します。');
-  debug('ユーザID：'.$u_id);
+  debug('自分のお気に入り情報を取得します。');
+  debug('ユーザーID：'.$u_id);
   // 例外処理
   try {
     // DBへ接続
@@ -549,8 +549,8 @@ function getSessionFlash($key){
 function makeRandKey($length = 8) {
   $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJLKMNOPQRSTUVWXYZ0123456789';
   $str = '';
-  for($i = 0; $i < $length; ++$i) {
-    $str .= $chars[mt_rand(0,61)];
+  for ($i = 0; $i < $length; ++$i) {
+    $str .= $chars[mt_rand(0, 61)];
   }
   return $str;
 }
@@ -577,7 +577,7 @@ function uploadImg($file, $key){
             throw new RuntimeException('その他のエラーが発生しました');
       }
 
-      // $file['mime']の値はブラウザ側で偽装不可能なので、MIMEタイプを自前でチェックする
+      // $file['mime']の値はブラウザ側で偽装可能なので、MIMEタイプを自前でチェックする
       // exif_imagetype関数は「IMAGETYPE_GIF」「IMAGETYPE_JPEG」などの定数を返す
       // exif_imagetype関数はエラーになる時があるのでエラーを無視する意味の「@」は必ずつける
       $type = @exif_imagetype($file['tmp_name']);

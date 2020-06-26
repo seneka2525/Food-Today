@@ -76,7 +76,7 @@ require('head.php');
             <select name="sort" class="search-form__input">
               <option value="0" <?php if(getFormData('sort',true) == 0 ){ echo 'selected'; } ?> >選択してください</option>
               <option value="1" <?php if(getFormData('sort',true) == 1 ){ echo 'selected'; } ?> >金額が安い順</option>
-              <option value="2" <?php if(getFormData('sort',true) == 2 ){ echo 'delected'; } ?> >金額が高い順</option>
+              <option value="2" <?php if(getFormData('sort',true) == 2 ){ echo 'selected'; } ?> >金額が高い順</option>
             </select>
           </div>
           <input type="submit" value="検索">

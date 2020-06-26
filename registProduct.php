@@ -19,20 +19,20 @@ require('auth.php');
 // GETデータを格納
 $p_id = (!empty($_GET['p_id'])) ? $_GET['p_id'] : '';
 // DBから商品データを取得
-$dbformData = (!empty($p_id)) ? getProduct($_SESSION['user_id'], $p_id) : '';
-// 新規登録画面か編集画面か判定用フラグ
-$edit_flg = (empty($dbFormdata)) ? false : true;
+$dbFormData = (!empty($p_id)) ? getProduct($_SESSION['user_id'], $p_id) : '';
+// 新規登録画面か編集画面か判別用フラグ
+$edit_flg = (empty($dbFormData)) ? false : true;
 // DBからカテゴリデータを取得
 $dbCategoryData = getCategory();
-debug('商品ID：' . $p_id);
-debug('フォーム用DBデータ：' . print_r($dbformData, true));
-debug('カテゴリデータ：' . print_r($dbCategoryData, true));
+debug('商品ID：'.$p_id);
+debug('フォーム用DBデータ：'.print_r($dbFormData,true));
+debug('カテゴリデータ：'.print_r($dbCategoryData,true));
 
 // パラメータ改ざんチェック
 //================================
 // GETパラメータはあるが、改ざんされている（URLをいじった）
 // 場合、正しい食べ物データが取れないのでマイページへ遷移させる
-if (!empty($p_id) && empty($dbFormData)) {
+if(!empty($p_id) && empty($dbFormData)){
   debug('GETパラメータの商品IDが違います。マイページへ遷移します。');
   header("Location:mypage.php"); // マイページへ
 }
@@ -184,7 +184,7 @@ require('head.php');
           <label class="<?php if (!empty($err_msg['category_id'])) echo 'err'; ?>">
             カテゴリ<span class="label-require">必須</span>
             <select name="category_id" id="">
-              <option value="0" <?php if (getformData('category_id') == 0) {
+              <option value="0" <?php if (getFormData('category_id') == 0) {
                                   echo 'selected';
                                 } ?>>選択してください</option>
               <?php
@@ -228,7 +228,7 @@ require('head.php');
           <label class="<?php if (!empty($err_msg['price'])) echo 'err'; ?>">
             金額<span class="label-require">必須</span>
             <div class="product-edit__price">
-              <input type="text" name="price" style="width:150px;" value="<?php echo (!empty(getformData('price'))) ? getFormData('price') : 0; ?>"><span class="edit-option">円</span>
+              <input type="text" name="price" style="width:150px" value="<?php echo (!empty(getformData('price'))) ? getFormData('price') : 0; ?>"><span class="edit-option">円</span>
             </div>
           </label>
           <div class="area-msg">
@@ -236,7 +236,7 @@ require('head.php');
             if (!empty($err_msg['price'])) echo $err_msg['price'];
             ?>
           </div>
-          <div style="overflow:hidden">
+          <div style="overflow:hidden;">
             <div class="imgDrop-container">
               画像１
               <label class="area-drop <?php if (!empty($err_msg['pic1'])) echo 'err'; ?>">
