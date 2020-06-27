@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="dest/bundle.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Muli&display=swap" rel="stylesheet">
   <!-- フォントアイコン -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 </head>

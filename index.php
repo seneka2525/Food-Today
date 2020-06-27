@@ -49,6 +49,11 @@ require('head.php');
   require('header.php');
   ?>
 
+  <div class="top-wrap">
+    <img src="images/top-banner.jpg" alt="トップ画像" class="top-wrap__img">
+    <p class="top-wrap__text-sub">What do you want to</p>
+    <p class="top-wrap__text-main">eat today?</p>
+  </div>
   <!-- メインコンテンツ -->
   <div class="content site-width">
 
