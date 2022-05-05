@@ -51,8 +51,10 @@ require('head.php');
 
   <div class="top-wrap">
     <img src="images/top-banner.jpg" alt="トップ画像" class="top-wrap__img">
-    <p class="top-wrap__text-sub">What do you want to</p>
-    <p class="top-wrap__text-main">eat today?</p>
+    <div class="top-wrap__img-text">
+        <p class="top-wrap__text-sub">What do you want to</p>
+        <p class="top-wrap__text-main">eat today?</p>
+    </div>
   </div>
   <!-- メインコンテンツ -->
   <div class="content site-width">

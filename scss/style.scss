@@ -775,19 +775,20 @@ html {
     display: block;
     margin: 0 auto;
   }
-  &__text-sub{
+  &__img-text{
     position: absolute;
-    top: 47%;
-    left: 40%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0;
+    padding: 0;
     font-family: 'Muli', sans-serif;
-    font-size: 40px;
+    font-size: 30px;
   }
   &__text-main{
     position: absolute;
-    top: 53%;
-    left: 45%;
-    font-family: 'Muli', sans-serif;
-    font-size: 40px;
+    padding-top: 10px;
+    left: 25%;
   }
 }
 
@@ -796,15 +797,15 @@ html {
     &__img{
       width: 100%;
     }
-    &__text-sub{
-      font-size: 11px;
-      top: 45%;
-      left: 35%;
-    }
-    &__text-main{
-      font-size: 11px;
-      top: 53%;
-      left: 43%;
+    &__img-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    margin: 0;
+    padding: 0;
+    font-family: 'Muli', sans-serif;
+    font-size: 16px;
     }
 }
 }

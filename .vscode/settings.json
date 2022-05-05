@@ -1,8 +1,0 @@
-{
-  "liveServer.settings.useWebExt": true,
-  "liveServer.settings.proxy": {
-    "enable": true,
-    "baseUri": "/Applications/MAMP/htdocs/eattoday",
-    "proxyUri": "http://localhost:8888/eattoday"
-  }
-}
