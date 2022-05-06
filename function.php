@@ -210,9 +210,9 @@ function isLogin(){
 // DB接続関数
 function dbConnect(){
   // DBへの接続準備
-  $dsn = 'mysql:dbname=eattoday;host=localhost;charset=utf8';
-  $user = 'root';
-  $password = 'root';
+  $dsn = 'mysql:dbname=heroku_3e66a245fefd880;host=us-cdbr-east-05.cleardb.net;charset=utf8';
+  $user = 'bd56948760ad46';
+  $password = '27618a13';
   $options = array(
     PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
