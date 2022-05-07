@@ -2,6 +2,6 @@
     "require": {
       "php": "~8.0",
       "ext-mbstring": "*",
-      "ext-gd": "*"
+      "ext-exif":"*"
     }
  }
