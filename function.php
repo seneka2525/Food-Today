@@ -2,7 +2,6 @@
 //================================
 // ログ
 //================================
-ini_set('display_errors', 'on');
 // ログを取るか
 ini_set('log_errors','on');
 // ログの出力ファイルを指定
@@ -12,7 +11,7 @@ ini_set('error_log','php.log');
 // デバッグ
 //================================
 // デバッグフラグ
-$debug_flg = true;
+$debug_flg = false;
 // デバッグログ関数
 function debug($str){
   global $debug_flg;
